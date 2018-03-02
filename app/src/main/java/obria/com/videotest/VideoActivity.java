@@ -19,14 +19,17 @@ public class VideoActivity extends AppCompatActivity {
 
     private static final String TAG = "ysj";
 
-    LibVLC libvlc;
+
     SurfaceView surfaceview;
     SurfaceHolder surfaceHolder;
     MediaPlayer mediaPlayer;
 
     String url = "rtsp://184.72.239.149/vod/mp4:BigBuckBunny_115k.mov";
-    private Media media;
-    private IVLCVout ivlcVout;
+    LibVLC libvlc;
+    Media media;
+    IVLCVout ivlcVout;
+
+    //http://blog.csdn.net/lp8800/article/details/62221092
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
