@@ -120,9 +120,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button_test.setOnClickListener(this);
 
 
-//        String temp = String.format(Constrant.RTSP_CAMERA, camera);
-//        Uri uri = Uri.parse(temp);
-        Uri uri = Uri.parse("rtsp://admin:harzone123!@192.168.2.70:554/h264/ch1/main/av_stream");
+        String temp = String.format(Constrant.RTSP_CAMERA, camera);
+        Uri uri = Uri.parse(temp);
+//        Uri uri = Uri.parse("rtsp://admin:harzone123!@192.168.2.70:554/h264/ch1/main/av_stream");
         videoView.setVideoURI(uri);
         videoView.requestFocus();
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -264,7 +264,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        textView_name.setText(name);
         textView_name.setText(name);
         imageView_face.setImageBitmap(bitmap);
         linearLayout.startAnimation(animation);
