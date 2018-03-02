@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="obria.com.videotest.SettingActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/imageButton_back"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/bg_imagebutton_back"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:text="参数设置" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:gravity="right|center"
+            android:maxLines="1"
+            android:text="标题:" />
+
+        <EditText
+            android:id="@+id/edittext_welcome"
+            android:layout_width="400dp"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:gravity="right|center"
+            android:text="识别服务器:" />
+
+        <EditText
+            android:id="@+id/edittext_recognizeserver"
+            android:layout_width="400dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:maxLines="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|center"
+            android:gravity="right|center"
+            android:text="摄像机:" />
+
+        <EditText
+            android:id="@+id/edittext_camera"
+            android:layout_width="400dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:maxLines="1" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button_save"
+        android:layout_width="200dp"
+        android:layout_marginTop="24dp"
+        android:layout_height="48dp"
+        android:background="@drawable/bg_btn_save"
+        android:layout_gravity="center"
+        android:textColor="@android:color/white"
+        android:text="保  存" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"></View>
+
+</LinearLayout>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_blue"
+    tools:context="obria.com.videotest.WelcomeActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="欢迎使用人脸识别系统"
+        android:textSize="36dp"
+        android:textColor="@android:color/white"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_marginRight="6dp"
+        android:text="深圳奥比岛技术有限公司 V1.0"
+        android:layout_width="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:textColor="@android:color/white"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/back_focus" android:state_focused="true">
+        <corners android:radius="6dp"></corners>
+        <solid android:color="@color/color_blue"></solid>
+        <stroke android:color="@color/white" android:width="2dp"/>
+    </item>
+
+    <item android:drawable="@drawable/back">
+        <corners android:radius="6dp"></corners>
+        <solid android:color="@color/colorPrimaryDark"></solid>
+    </item>
+</selector>
