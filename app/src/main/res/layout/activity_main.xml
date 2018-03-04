@@ -5,38 +5,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/bg"
+    android:background="@color/color_blue"
     tools:context="obria.com.videotest.MainActivity">
 
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="top"
-        android:orientation="horizontal">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-        <TextView
+        <SurfaceView
+        android:id="@+id/surfaceview"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_height="match_parent" />
+
+        <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_gravity="center"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:gravity="center"
-        android:id="@+id/textview_weekinfo"
-        android:paddingLeft="12dp"
-        android:textSize="24sp"
-        android:textColor="@color/focused"
-        android:text="周日" />
+        android:layout_height="wrap_content" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toRightOf="@+id/textview_weekinfo"
-            android:gravity="center"
-            android:id="@+id/textview_timeinfo"
-            android:paddingLeft="12dp"
-            android:textSize="14sp"
-            android:textColor="@color/focused"
-            android:text="00:00:00" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_gravity="top"
+            android:gravity="top">
 
-        <!--<Button-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+                android:id="@+id/textview_weekinfo"
+                android:paddingLeft="12dp"
+                android:textSize="24sp"
+                android:textColor="@color/fontcolor"
+                android:text="周日" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/textview_weekinfo"
+                android:gravity="center"
+                android:id="@+id/textview_timeinfo"
+                android:paddingLeft="12dp"
+                android:textSize="20sp"
+                android:textColor="@color/fontcolor"
+                android:text="00:00:00" />
+
+            <!--<Button-->
             <!--android:id="@+id/button1"-->
             <!--android:layout_width="100dp"-->
             <!--android:layout_height="46dp"-->
@@ -46,41 +63,39 @@
             <!--android:background="@drawable/bg_btn_save"-->
             <!--android:text="Test" />-->
 
-        <ImageButton
-            android:id="@+id/button_test"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/button_setting"
-            android:layout_toLeftOf="@+id/button_setting"
-            android:background="@drawable/bg_imagebutton_selector_test"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/textview_title"
+                android:textColor="@color/fontcolor"
+                android:textSize="20sp"
+                android:layout_centerInParent="true"
+                android:layout_height="wrap_content" />
 
-        <ImageButton
-            android:id="@+id/button_setting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
-            android:background="@drawable/bg_imagebutton_selector"/>
+            <ImageButton
+                android:id="@+id/button_test"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/button_setting"
+                android:layout_toLeftOf="@+id/button_setting"
+                android:visibility="gone"
+                android:background="@drawable/bg_imagebutton_selector_test"/>
 
-    </RelativeLayout>
+            <ImageButton
+                android:id="@+id/button_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:background="@drawable/bg_imagebutton_selector"/>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <VideoView
-            android:id="@+id/videoView"
-            android:layout_width="800dp"
-            android:layout_height="400dp"
-            android:layout_gravity="center" />
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/recognize"
-            android:layout_width="280dp"
-            android:layout_height="420dp"
+            android:layout_width="260dp"
+            android:layout_height="350dp"
             android:layout_gravity="center"
             android:background="@drawable/bg_popup_linearlayout"
             android:orientation="vertical"
@@ -89,22 +104,23 @@
             <ImageView
                 android:id="@+id/imageview_face"
                 android:layout_width="match_parent"
-                android:layout_height="330dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:layout_margin="6dp" />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#cccccc"></View>
+            <!--<View-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:background="#cccccc"></View>-->
 
             <TextView
                 android:id="@+id/textview_name"
                 android:layout_width="match_parent"
-                android:layout_height="64dp"
+                android:layout_height="96dp"
                 android:gravity="center"
                 android:textSize="36sp"
                 android:textStyle="bold"
-                android:textColor="@color/red"
+                android:textColor="@color/white"
                 android:text="" />
         </LinearLayout>
     </FrameLayout>

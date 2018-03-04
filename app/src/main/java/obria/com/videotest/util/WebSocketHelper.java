@@ -37,7 +37,6 @@ public class WebSocketHelper {
     }
 
     private void init() {
-//        String url = "ws://192.168.2.193:4649/Echo";
         String url = getUrl();
         try {
             java.net.URI uri = java.net.URI.create(url);
@@ -45,16 +44,13 @@ public class WebSocketHelper {
                 @Override
                 public void onOpen(ServerHandshake serverHandshake) {
                     String status = "open";
-                    ToastUtil.show("连接成功");
                 }
 
                 @Override
                 public void onMessage(String json) {
-
                     if (mIsWork == false) {
                         return;
                     }
-
                     if (TextUtils.isEmpty(json)) {
                         return;
                     }
@@ -78,11 +74,9 @@ public class WebSocketHelper {
 
                 @Override
                 public void onClose(int i, String s, boolean b) {
-
                     if (mIsHandClose) {
                         return;
                     }
-
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -91,13 +85,11 @@ public class WebSocketHelper {
                             }
                         }
                     });
-
                     dispose();
                 }
 
                 @Override
                 public void onError(Exception e) {
-
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -106,7 +98,6 @@ public class WebSocketHelper {
                             }
                         }
                     });
-
                     error();
                 }
             };
@@ -133,6 +124,10 @@ public class WebSocketHelper {
 
     public void pause() {
         mIsWork = false;
+    }
+
+    public void work() {
+        mIsWork = true;
     }
 
     Thread thread;

@@ -11,6 +11,9 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -18,13 +21,19 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.squareup.picasso.Picasso;
 
+import org.videolan.libvlc.IVLCVout;
+import org.videolan.libvlc.LibVLC;
+import org.videolan.libvlc.Media;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -39,6 +48,8 @@ import obria.com.videotest.util.ToastUtil;
 import obria.com.videotest.util.WebSocketHelper;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, IWebSocketListener {
+
+    private final static String TAG = "ysj";
 
     LinearLayout linearLayout;
     VideoView videoView;
@@ -59,6 +70,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     Timer timer;
 
+    ProgressBar progressBar;
+    SurfaceView surfaceView;
+    SurfaceHolder surfaceHolder;
+    LibVLC libVLC;
+    org.videolan.libvlc.MediaPlayer mediaPlayer;
+    IVLCVout ivlcVout;
+    Uri cameraRtsp_uri;
+
+    TextView textView_title ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,10 +88,92 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         spHelper = new SharedPreferencesHelper(this);
         if (loadData()) {
             initView();
+            initPlayer();
+            timer = new Timer();
+            timer.schedule(new MyTimerTask(), 0, 1000);
         }
+    }
 
-        timer = new Timer();
-        timer.schedule(new MyTimerTask(), 0, 1000);
+    private void hideLoading() {
+        progressBar.setVisibility(View.GONE);
+    }
+
+    private void showLoading() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void initPlayer() {
+
+        ArrayList<String> options = new ArrayList<>();
+//        options.add(":file-caching=1500");//文件缓存
+        options.add(":network-caching=300");//网络缓存
+
+//        options.add(":live-caching=1500");//直播缓存
+//        options.add(":sout-mux-caching=1500");//输出缓存
+//        options.add(":codec=mediacodec,iomx,all");
+
+        libVLC = new LibVLC(options);
+        mediaPlayer = new org.videolan.libvlc.MediaPlayer(libVLC);
+        mediaPlayer.setEventListener(new org.videolan.libvlc.MediaPlayer.EventListener() {
+            @Override
+            public void onEvent(org.videolan.libvlc.MediaPlayer.Event event) {
+
+                switch (event.type) {
+                    case org.videolan.libvlc.MediaPlayer.Event.Buffering:
+                        if (event.getBuffering() > 10) {
+                            hideLoading();
+                        }
+                        break;
+                    case org.videolan.libvlc.MediaPlayer.Event.Opening:
+//                        ToastUtil.shortShow("opening");
+                        break;
+                    case org.videolan.libvlc.MediaPlayer.Event.EncounteredError:
+                        hideLoading();
+//                        ToastUtil.shortShow("error");
+                        break;
+                }
+            }
+        });
+
+        Media media = new Media(libVLC, cameraRtsp_uri);
+        mediaPlayer.setMedia(media);
+
+        ivlcVout = mediaPlayer.getVLCVout();
+        ivlcVout.setVideoView(surfaceView);
+        ivlcVout.attachViews();
+        ivlcVout.addCallback(new IVLCVout.Callback() {
+            @Override
+            public void onNewLayout(IVLCVout vlcVout, int width, int height, int visibleWidth, int visibleHeight, int sarNum, int sarDen) {
+
+            }
+
+            @Override
+            public void onSurfacesCreated(IVLCVout vlcVout) {
+                int sw = getWindow().getDecorView().getWidth();
+                int sh = getWindow().getDecorView().getHeight();
+
+                if (sw * sh == 0) {
+                    Log.e(TAG, "Invalid surface size");
+                    return;
+                }
+//                mediaPlayer.getVLCVout().setWindowSize(sw, sh);
+//                mediaPlayer.setAspectRatio("16:9");
+//                mediaPlayer.setScale(0);
+            }
+
+            @Override
+            public void onSurfacesDestroyed(IVLCVout vlcVout) {
+
+            }
+
+            @Override
+            public void onHardwareAccelerationError(IVLCVout vlcVout) {
+
+            }
+        });
+        mediaPlayer.play();
+        surfaceView.setFocusable(true);
+        surfaceView.requestFocus();
     }
 
     private class MyTimerTask extends TimerTask {
@@ -106,10 +209,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initView() {
 
+        surfaceView = (SurfaceView) findViewById(R.id.surfaceview);
+        progressBar = (ProgressBar) findViewById(R.id.progressbar);
+
+        textView_title = (TextView) findViewById(R.id.textview_title);
+        textView_title.setText(welcome);
+
+
         textview_weekinfo = (TextView) findViewById(R.id.textview_weekinfo);
         textview_timeinfo = (TextView) findViewById(R.id.textview_timeinfo);
         linearLayout = (LinearLayout) findViewById(R.id.recognize);
-        videoView = (VideoView) findViewById(R.id.videoView);
 
         imageView_face = (ImageView) findViewById(R.id.imageview_face);
         button_setting = (ImageButton) findViewById(R.id.button_setting);
@@ -119,27 +228,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button_test = (ImageButton) findViewById(R.id.button_test);
         button_test.setOnClickListener(this);
 
-
+//        camera = "192.168.0.10";
         String temp = String.format(Constrant.RTSP_CAMERA, camera);
-        Uri uri = Uri.parse(temp);
-//        Uri uri = Uri.parse("rtsp://admin:harzone123!@192.168.2.70:554/h264/ch1/main/av_stream");
-        videoView.setVideoURI(uri);
-        videoView.requestFocus();
-        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mediaPlayer) {
-                mediaPlayer.start();
-            }
-        });
+        cameraRtsp_uri = Uri.parse(temp);
 
-        videoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-            @Override
-            public boolean onError(MediaPlayer mediaPlayer, int i, int i1) {
-                //打开视频失败
-                return false;
-            }
-        });
 
+//        koala = "192.168.0.53";
         wsHelper = new WebSocketHelper(this, koala, camera);
         boolean open = wsHelper.open();
         if (open) {
@@ -176,11 +270,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStart() {
         super.onStart();
+        wsHelper.work();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        wsHelper.work();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        wsHelper.pause();
     }
 
     @Override
@@ -207,7 +309,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (face.person != null) {
                 avatar = face.person.avatar;
                 if (avatar.startsWith("http") == false) {
-                    avatar = "http://" + koala +  face.person.avatar;
+                    avatar = "http://" + koala + face.person.avatar;
                 }
                 if (face.person.subject_type == 0) {
                     //业主
@@ -299,7 +401,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        timer.cancel();
+        if (timer != null)
+            timer.cancel();
         timer = null;
         wsHelper.HandClose();
     }

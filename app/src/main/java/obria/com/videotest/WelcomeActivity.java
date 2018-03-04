@@ -23,6 +23,6 @@ public class WelcomeActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
                 WelcomeActivity.this.finish();
             }
-        }, 5 * 1000);
+        }, 2 * 1000);
     }
 }

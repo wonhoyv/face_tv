@@ -1,118 +1,109 @@
 package obria.com.videotest;
 
+import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.videolan.libvlc.IVLCVout;
 import org.videolan.libvlc.LibVLC;
 import org.videolan.libvlc.Media;
 import org.videolan.libvlc.MediaPlayer;
+import org.videolan.libvlc.media.VideoView;
 
 import java.util.ArrayList;
 
 public class VideoActivity extends AppCompatActivity {
 
     private static final String TAG = "ysj";
+    String url_1 = "rtsp://admin:harzone123!@192.168.2.70:554/h264/ch1/main/av_stream";
+    String url_2 = "rtsp://184.72.239.149/vod/mp4:BigBuckBunny_115k.mov";
+    String url_3 = "rtsp://192.168.0.10/user=admin&password=&channel=1&stream=0.sdp?";
+    //http://blog.csdn.net/lp8800/article/details/62221092
+    final Uri test_uri = Uri.parse(url_3);
 
-
-    SurfaceView surfaceview;
+    android.widget.VideoView myok;
+    VideoView mVideoView;
+    SurfaceView surfaceView;
     SurfaceHolder surfaceHolder;
+    LibVLC libVLC;
     MediaPlayer mediaPlayer;
-
-    String url = "rtsp://184.72.239.149/vod/mp4:BigBuckBunny_115k.mov";
-    LibVLC libvlc;
-    Media media;
     IVLCVout ivlcVout;
 
-    //http://blog.csdn.net/lp8800/article/details/62221092
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
 
-        surfaceview = (SurfaceView) findViewById(R.id.surfaceview);
+//        surfaceView = (SurfaceView) findViewById(R.id.surfaceview);
+//        surfaceHolder = surfaceView.getHolder();
+//        progressBar = (ProgressBar) findViewById(R.id.progressbar);
+//        initPlayer();
+
+//        mVideoView = (VideoView) findViewById(R.id.video_view);
+//        mVideoView.setVideoURI(Uri.parse(url_2));
+//        mVideoView.start();
+
+//        myok = (android.widget.VideoView) findViewById(R.id.mytest);
+//        myok.setVideoURI(test_uri);
+//        myok.start();
+    }
+
+    private void hideLoading() {
+        progressBar.setVisibility(View.GONE);
+    }
+
+    private void showLoading() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void showToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     private void initPlayer() {
+
         ArrayList<String> options = new ArrayList<>();
-        options.add("--aout=opensles");
-        options.add("--audio-time-stretch");
-        options.add("-vvv");
-        libvlc = new LibVLC(VideoActivity.this, options);
-        surfaceHolder = surfaceview.getHolder();
-        surfaceHolder.setKeepScreenOn(true);
-        surfaceHolder.addCallback(new SurfaceHolder.Callback() {
-            @Override
-            public void surfaceCreated(SurfaceHolder holder) {
-
-            }
-
-            @Override
-            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
-            }
-
-            @Override
-            public void surfaceDestroyed(SurfaceHolder holder) {
-
-            }
-        });
-
-        mediaPlayer = new MediaPlayer(libvlc);
+        libVLC = new LibVLC(options);
+        mediaPlayer = new MediaPlayer(libVLC);
         mediaPlayer.setEventListener(new MediaPlayer.EventListener() {
             @Override
             public void onEvent(MediaPlayer.Event event) {
+
                 switch (event.type) {
                     case MediaPlayer.Event.Buffering:
-                        if (mediaPlayer.isPlaying()) {
-                            mediaPlayer.pause();
+                        showToast("buffering" + String.valueOf(event.getBuffering()));
+                        if (event.getBuffering() > 10) {
+                            hideLoading();
                         }
-
-                        if (event.getBuffering() >= 100.0f) {
-//                                hideLoading();
-//                                Log.i(TAG, "onEvent: buffer success...");
-//                                handler.sendEmptyMessageDelayed(CODE_HIDE_BLACK, 500);
-//                                handler.sendEmptyMessageDelayed(CODE_GONE_PROGRAMINFO, 5000);
-//
-//                                handler.sendEmptyMessageDelayed(CODE_HIDE_BLACK, 500);
-//                                handler.sendEmptyMessageDelayed(CODE_GONE_PROGRAMINFO, 5000);
-
-                            mediaPlayer.play();
-                        } else {
-//                                showLoading();
-//                                tvCache.setText("缓冲: " + Math.floor(event.getBuffering()) + "%");
-                        }
-
                         break;
-
-                    case MediaPlayer.Event.Playing:
-                        Log.i(TAG, "onEvent: playing...");
-                        break;
-
-                    case MediaPlayer.Event.EncounteredError:
-                        Log.i(TAG, "onEvent: error...");
-//                        hideLoading();
-                        mediaPlayer.stop();
-                        Toast.makeText(VideoActivity.this, "播放出错！", Toast.LENGTH_LONG).show();
+                    case MediaPlayer.Event.Opening:
+                        showToast("opening");
                         break;
                 }
             }
         });
 
-        Uri uri = Uri.parse("rtsp://admin:harzone123!@192.168.2.70:554/h264/ch1/main/av_stream");
-        media = new Media(libvlc, uri);
+        Media media = new Media(libVLC, test_uri);
         mediaPlayer.setMedia(media);
 
         ivlcVout = mediaPlayer.getVLCVout();
-        ivlcVout.setVideoView(surfaceview);
+        ivlcVout.setVideoView(surfaceView);
         ivlcVout.attachViews();
         ivlcVout.addCallback(new IVLCVout.Callback() {
+            @Override
+            public void onNewLayout(IVLCVout vlcVout, int width, int height, int visibleWidth, int visibleHeight, int sarNum, int sarDen) {
+
+            }
+
             @Override
             public void onSurfacesCreated(IVLCVout vlcVout) {
                 int sw = getWindow().getDecorView().getWidth();
@@ -124,16 +115,20 @@ public class VideoActivity extends AppCompatActivity {
                 }
 
                 mediaPlayer.getVLCVout().setWindowSize(sw, sh);
-                mediaPlayer.setAspectRatio("16:9");
-                mediaPlayer.setScale(0);
+//                mediaPlayer.setAspectRatio("16:9");
+//                mediaPlayer.setScale(0);
             }
 
             @Override
             public void onSurfacesDestroyed(IVLCVout vlcVout) {
 
             }
-        });
 
+            @Override
+            public void onHardwareAccelerationError(IVLCVout vlcVout) {
+
+            }
+        });
         mediaPlayer.play();
     }
 }
