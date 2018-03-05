@@ -3,7 +3,7 @@ package obria.com.videotest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.MediaPlayer;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,13 +17,11 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.squareup.picasso.Picasso;
@@ -38,6 +36,7 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import obria.com.videotest.entity.FaceRecognized;
 import obria.com.videotest.entity.RecognizeState;
 import obria.com.videotest.listener.IWebSocketListener;
@@ -78,7 +77,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     IVLCVout ivlcVout;
     Uri cameraRtsp_uri;
 
-    TextView textView_title ;
+    TextView textView_title;
+    CircleImageView circleImageView;
+    ImageView statusImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,6 +216,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textView_title = (TextView) findViewById(R.id.textview_title);
         textView_title.setText(welcome);
 
+        circleImageView = (CircleImageView) findViewById(R.id.cirleImageView);
+        statusImageView = (ImageView) findViewById(R.id.statusImageView);
 
         textview_weekinfo = (TextView) findViewById(R.id.textview_weekinfo);
         textview_timeinfo = (TextView) findViewById(R.id.textview_timeinfo);
@@ -228,12 +231,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button_test = (ImageButton) findViewById(R.id.button_test);
         button_test.setOnClickListener(this);
 
-//        camera = "192.168.0.10";
+        camera = "192.168.0.10";
         String temp = String.format(Constrant.RTSP_CAMERA, camera);
         cameraRtsp_uri = Uri.parse(temp);
 
 
-//        koala = "192.168.0.53";
+        koala = "192.168.0.53";
         wsHelper = new WebSocketHelper(this, koala, camera);
         boolean open = wsHelper.open();
         if (open) {
@@ -314,10 +317,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (face.person.subject_type == 0) {
                     //业主
                     name = "业主";
+                    statusImageView.setImageResource(R.mipmap.yz);
+                    int yzColor = this.getResources().getColor(R.color.yz);
+                    textView_name.setTextColor(yzColor);
                 }
                 if (face.person.subject_type == 1) {
                     //租户
                     name = "租户";
+                    statusImageView.setImageResource(R.mipmap.zh);
+                    int yzColor = this.getResources().getColor(R.color.zh);
+                    textView_name.setTextColor(yzColor);
                 }
                 if (face.person.subject_type == 2) {
                     //VIP
@@ -328,7 +337,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (face.type == RecognizeState.unrecognized.toString()) {
             //陌生人
             name = "陌生人";
+            int yzColor = this.getResources().getColor(R.color.msr);
+            textView_name.setTextColor(yzColor);
+
             String base64Image = face.data.face.image;
+            statusImageView.setImageResource(R.mipmap.msr);
             Bitmap bitmap = stringToBitmap(base64Image);
             PopupStranger(name, bitmap);
         }
@@ -394,7 +407,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         textView_name.setText(name);
         Uri uri_avatar = Uri.parse(avatar);
-        Picasso.with(this).load(uri_avatar).into(imageView_face);
+//        Picasso.with(this).load(uri_avatar).into(imageView_face);
+        Picasso.with(this).load(uri_avatar).into(circleImageView);
         linearLayout.startAnimation(animation);
     }
 

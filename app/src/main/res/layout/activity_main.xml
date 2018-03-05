@@ -95,7 +95,7 @@
         <LinearLayout
             android:id="@+id/recognize"
             android:layout_width="260dp"
-            android:layout_height="350dp"
+            android:layout_height="370dp"
             android:layout_gravity="center"
             android:background="@drawable/bg_popup_linearlayout"
             android:orientation="vertical"
@@ -106,7 +106,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:visibility="gone"
                 android:layout_margin="6dp" />
+            
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="180dp"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/cirleImageView"
+                android:layout_marginTop="24dp"
+                android:layout_height="180dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_marginTop="24dp"
+                android:id="@+id/statusImageView"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content" />
 
             <!--<View-->
                 <!--android:layout_width="match_parent"-->
@@ -116,12 +131,15 @@
             <TextView
                 android:id="@+id/textview_name"
                 android:layout_width="match_parent"
-                android:layout_height="96dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textSize="36sp"
                 android:textStyle="bold"
+                android:layout_marginTop="24dp"
                 android:textColor="@color/white"
                 android:text="" />
+
+
         </LinearLayout>
     </FrameLayout>
 

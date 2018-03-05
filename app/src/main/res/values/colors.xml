@@ -9,4 +9,8 @@
     <color name="focused">#d4237a</color>
     <color name="red">#ff0000</color>
     <color name="fontcolor">#ffffff</color>
+
+    <color name="yz">#18e49a</color>
+    <color name="zh">#4ca4ff</color>
+    <color name="msr">#ff5959</color>
 </resources>
