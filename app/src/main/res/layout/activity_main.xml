@@ -92,6 +92,7 @@
 
         </RelativeLayout>
 
+        <!--layout_height=350-->
         <LinearLayout
             android:id="@+id/recognize"
             android:layout_width="260dp"
