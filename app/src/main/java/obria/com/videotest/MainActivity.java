@@ -3,7 +3,6 @@ package obria.com.videotest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -50,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private final static String TAG = "ysj";
 
-    LinearLayout linearLayout;
+    LinearLayout recognize;
     VideoView videoView;
     ImageView imageView_face;
     ImageButton button_setting;
@@ -221,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         textview_weekinfo = (TextView) findViewById(R.id.textview_weekinfo);
         textview_timeinfo = (TextView) findViewById(R.id.textview_timeinfo);
-        linearLayout = (LinearLayout) findViewById(R.id.recognize);
+        recognize = (LinearLayout) findViewById(R.id.recognize);
 
         imageView_face = (ImageView) findViewById(R.id.imageview_face);
         button_setting = (ImageButton) findViewById(R.id.button_setting);
@@ -231,12 +230,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button_test = (ImageButton) findViewById(R.id.button_test);
         button_test.setOnClickListener(this);
 
-        camera = "192.168.0.10";
+//        camera = "192.168.0.10";
         String temp = String.format(Constrant.RTSP_CAMERA, camera);
         cameraRtsp_uri = Uri.parse(temp);
 
 
-        koala = "192.168.0.53";
+//        koala = "192.168.0.53";
         wsHelper = new WebSocketHelper(this, koala, camera);
         boolean open = wsHelper.open();
         if (open) {
@@ -249,7 +248,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public boolean handleMessage(Message message) {
 
             Animation animation_tranlsate = AnimationUtils.loadAnimation(MainActivity.this, R.anim.translate);
-            linearLayout.startAnimation(animation_tranlsate);
+            recognize.startAnimation(animation_tranlsate);
             return true;
         }
     });
@@ -317,6 +316,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (face.person.subject_type == 0) {
                     //业主
                     name = "业主";
+                    recognize.setBackground(this.getResources().getDrawable(R.mipmap.yzbg));
                     statusImageView.setImageResource(R.mipmap.yz);
                     int yzColor = this.getResources().getColor(R.color.yz);
                     textView_name.setTextColor(yzColor);
@@ -359,7 +359,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void PopupStranger(String name, Bitmap bitmap) {
-        linearLayout.setVisibility(View.VISIBLE);
+        recognize.setVisibility(View.VISIBLE);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.scale);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -381,11 +381,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         textView_name.setText(name);
         imageView_face.setImageBitmap(bitmap);
-        linearLayout.startAnimation(animation);
+        recognize.startAnimation(animation);
     }
 
     private void Popup(String name, String avatar) {
-        linearLayout.setVisibility(View.VISIBLE);
+        recognize.setVisibility(View.VISIBLE);
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.scale);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -409,7 +409,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Uri uri_avatar = Uri.parse(avatar);
 //        Picasso.with(this).load(uri_avatar).into(imageView_face);
         Picasso.with(this).load(uri_avatar).into(circleImageView);
-        linearLayout.startAnimation(animation);
+        recognize.startAnimation(animation);
     }
 
     @Override
