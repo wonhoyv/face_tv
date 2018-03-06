@@ -231,12 +231,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button_test = (ImageButton) findViewById(R.id.button_test);
         button_test.setOnClickListener(this);
 
-//        camera = "192.168.0.10";
+        camera = "192.168.0.10";
         String temp = String.format(Constrant.RTSP_CAMERA, camera);
         cameraRtsp_uri = Uri.parse(temp);
 
 
-//        koala = "192.168.0.53";
+        koala = "192.168.0.53";
         wsHelper = new WebSocketHelper(this, koala, camera);
         boolean open = wsHelper.open();
         if (open) {
