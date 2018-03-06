@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -316,7 +317,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (face.person.subject_type == 0) {
                     //业主
                     name = "业主";
-                    recognize.setBackground(this.getResources().getDrawable(R.mipmap.yzbg));
+                    recognize.setBackground(this.getResources().getDrawable(R.drawable.yzbg));
                     statusImageView.setImageResource(R.mipmap.yz);
                     int yzColor = this.getResources().getColor(R.color.yz);
                     textView_name.setTextColor(yzColor);
@@ -324,6 +325,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (face.person.subject_type == 1) {
                     //租户
                     name = "租户";
+                    recognize.setBackground(this.getResources().getDrawable(R.drawable.zhbg));
                     statusImageView.setImageResource(R.mipmap.zh);
                     int yzColor = this.getResources().getColor(R.color.zh);
                     textView_name.setTextColor(yzColor);
@@ -337,6 +339,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (face.type == RecognizeState.unrecognized.toString()) {
             //陌生人
             name = "陌生人";
+            recognize.setBackground(this.getResources().getDrawable(R.drawable.msrbg));
             int yzColor = this.getResources().getColor(R.color.msr);
             textView_name.setTextColor(yzColor);
 
