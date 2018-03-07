@@ -167,21 +167,10 @@ public class WebSocketHelper {
     private String getUrl() {
         String url = String.format("ws://%s:9000/video", koala);
         String rtsp = String.format(Constrant.RTSP_CAMERA, camera);
-        String rtspUrlEncode = toURLEncoded(rtsp);
+        String rtspUrlEncode = Util.toURLEncoded(rtsp);
         String result = url + "?url=" + rtspUrlEncode;
         return result;
     }
 
-    private static String toURLEncoded(String paramString) {
-        if (paramString == null || paramString.equals("")) {
-            return "";
-        }
-        try {
-            String str = new String(paramString.getBytes(), "UTF-8");
-            str = URLEncoder.encode(str, "UTF-8");
-            return str;
-        } catch (Exception localException) {
-        }
-        return "";
-    }
+
 }

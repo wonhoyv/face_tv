@@ -24,10 +24,6 @@ public class ToastUtil {
 
     private static ToastUtil td;
 
-    public static void show(int resId) {
-        show(MyApplication.getContext().getString(resId));
-    }
-
     public static void show(String msg) {
         if (TextUtils.isEmpty(msg))
             return;
@@ -71,7 +67,6 @@ public class ToastUtil {
                 toast.setDuration(Toast.LENGTH_LONG);
                 tvMsg.setText(msg);
             } else {
-                toast.setView(contentView);
                 toast.setView(contentView);
                 toast.setGravity(Gravity.CENTER, 0, 0);
                 toast.setDuration(Toast.LENGTH_LONG);

@@ -51,8 +51,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private final static String TAG = "ysj";
 
     LinearLayout recognize;
-    VideoView videoView;
-    ImageView imageView_face;
     ImageButton button_setting;
     ImageButton button_test;
     TextView textView_name;
@@ -80,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView textView_title;
     CircleImageView circleImageView;
     ImageView statusImageView;
+    Bitmap bitmapStranger;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,8 +89,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (loadData()) {
             initView();
             initPlayer();
-            timer = new Timer();
-            timer.schedule(new MyTimerTask(), 0, 1000);
+//            timer = new Timer();
+//            timer.schedule(new MyTimerTask(), 0, 1000);
         }
     }
 
@@ -106,12 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initPlayer() {
 
         ArrayList<String> options = new ArrayList<>();
-//        options.add(":file-caching=1500");//文件缓存
         options.add(":network-caching=300");//网络缓存
-
-//        options.add(":live-caching=1500");//直播缓存
-//        options.add(":sout-mux-caching=1500");//输出缓存
-//        options.add(":codec=mediacodec,iomx,all");
 
         libVLC = new LibVLC(options);
         mediaPlayer = new org.videolan.libvlc.MediaPlayer(libVLC);
@@ -126,11 +120,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
                         break;
                     case org.videolan.libvlc.MediaPlayer.Event.Opening:
-//                        ToastUtil.shortShow("opening");
                         break;
                     case org.videolan.libvlc.MediaPlayer.Event.EncounteredError:
                         hideLoading();
-//                        ToastUtil.shortShow("error");
                         break;
                 }
             }
@@ -145,7 +137,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ivlcVout.addCallback(new IVLCVout.Callback() {
             @Override
             public void onNewLayout(IVLCVout vlcVout, int width, int height, int visibleWidth, int visibleHeight, int sarNum, int sarDen) {
-
             }
 
             @Override
@@ -223,7 +214,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textview_timeinfo = (TextView) findViewById(R.id.textview_timeinfo);
         recognize = (LinearLayout) findViewById(R.id.recognize);
 
-        imageView_face = (ImageView) findViewById(R.id.imageview_face);
         button_setting = (ImageButton) findViewById(R.id.button_setting);
         button_setting.setOnClickListener(this);
 
@@ -231,12 +221,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button_test = (ImageButton) findViewById(R.id.button_test);
         button_test.setOnClickListener(this);
 
-        camera = "192.168.0.10";
+//        camera = "192.168.0.10";
         String temp = String.format(Constrant.RTSP_CAMERA, camera);
         cameraRtsp_uri = Uri.parse(temp);
 
-
-        koala = "192.168.0.53";
+//        koala = "192.168.0.53";
         wsHelper = new WebSocketHelper(this, koala, camera);
         boolean open = wsHelper.open();
         if (open) {
@@ -294,7 +283,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (recognize == null) {
             return;
         }
-
         showFace(recognize);
     }
 
@@ -336,7 +324,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Popup(name, avatar);
             }
         }
-        if (face.type == RecognizeState.unrecognized.toString()) {
+        if (TextUtils.equals(face.type, RecognizeState.unrecognized.toString())) {
+
+            if (bitmapStranger != null && bitmapStranger.isRecycled() == false) {
+                bitmapStranger.recycle();
+                bitmapStranger = null;
+                System.gc();
+            }
+
             //陌生人
             name = "陌生人";
             recognize.setBackground(this.getResources().getDrawable(R.drawable.msrbg));
@@ -345,15 +340,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             String base64Image = face.data.face.image;
             statusImageView.setImageResource(R.mipmap.msr);
-            Bitmap bitmap = stringToBitmap(base64Image);
-            PopupStranger(name, bitmap);
+            bitmapStranger = stringToBitmap(base64Image);
+            PopupStranger(name, bitmapStranger);
         }
     }
 
     public Bitmap stringToBitmap(String string) {
         Bitmap bitmap = null;
         try {
-            byte[] bitmapArray = Base64.decode(string.split(",")[1], Base64.DEFAULT);
+            byte[] bitmapArray = Base64.decode(string, Base64.DEFAULT);
             bitmap = BitmapFactory.decodeByteArray(bitmapArray, 0, bitmapArray.length);
         } catch (Exception e) {
             e.printStackTrace();
@@ -383,7 +378,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         textView_name.setText(name);
-        imageView_face.setImageBitmap(bitmap);
+        circleImageView.setImageBitmap(bitmap);
         recognize.startAnimation(animation);
     }
 
@@ -410,7 +405,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         textView_name.setText(name);
         Uri uri_avatar = Uri.parse(avatar);
-//        Picasso.with(this).load(uri_avatar).into(imageView_face);
         Picasso.with(this).load(uri_avatar).into(circleImageView);
         recognize.startAnimation(animation);
     }
