@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/color_blue"
     android:orientation="vertical"
+    android:id="@+id/root"
     tools:context="obria.com.videotest.MainActivity">
 
     <FrameLayout
@@ -29,6 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="46dp"
             android:layout_gravity="top"
+            android:background="#89000000"
             android:gravity="top">
 
             <TextView
@@ -70,8 +72,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:textColor="@color/fontcolor"
-                android:textSize="20sp" />
+                android:textColor="@color/colorAccent"
+                android:textSize="28sp" />
 
             <ImageButton
                 android:id="@+id/button_test"
@@ -90,6 +92,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="6dp"
                 android:layout_marginRight="6dp"
+                android:visibility="gone"
                 android:background="@drawable/bg_imagebutton_selector" />
 
         </RelativeLayout>
@@ -98,16 +101,16 @@
         <!--280 270-->
         <LinearLayout
             android:id="@+id/recognize"
-            android:layout_width="300dp"
-            android:layout_height="400dp"
+            android:layout_width="320dp"
+            android:layout_height="440dp"
             android:layout_gravity="center"
             android:orientation="vertical"
             android:visibility="visible">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/cirleImageView"
-                android:layout_width="220dp"
-                android:layout_height="220dp"
+                android:layout_width="260dp"
+                android:layout_height="260dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="24dp" />
 

@@ -7,22 +7,25 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import com.squareup.picasso.Picasso;
 
@@ -80,17 +83,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageView statusImageView;
     Bitmap bitmapStranger;
 
+    LinearLayout root;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        root = (LinearLayout) findViewById(R.id.root);
         spHelper = new SharedPreferencesHelper(this);
         if (loadData()) {
             initView();
             initPlayer();
 //            timer = new Timer();
 //            timer.schedule(new MyTimerTask(), 0, 1000);
+            View view = LayoutInflater.from(this).inflate(R.layout.optionmenu, null);
+            window = new PopupWindow(view, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            window.setTouchable(true);
+            window.setOutsideTouchable(true);
+            window.setContentView(view);
+            button_setting = (ImageButton) view.findViewById(R.id.button_setting);
+            button_setting.setOnClickListener(this);
         }
     }
 
@@ -148,9 +160,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Log.e(TAG, "Invalid surface size");
                     return;
                 }
-//                mediaPlayer.getVLCVout().setWindowSize(sw, sh);
-//                mediaPlayer.setAspectRatio("16:9");
-//                mediaPlayer.setScale(0);
             }
 
             @Override
@@ -214,18 +223,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textview_timeinfo = (TextView) findViewById(R.id.textview_timeinfo);
         recognize = (LinearLayout) findViewById(R.id.recognize);
 
-        button_setting = (ImageButton) findViewById(R.id.button_setting);
-        button_setting.setOnClickListener(this);
+//        button_setting = (ImageButton) findViewById(R.id.button_setting);
+//        button_setting.setOnClickListener(this);
 
         textView_name = (TextView) findViewById(R.id.textview_name);
         button_test = (ImageButton) findViewById(R.id.button_test);
         button_test.setOnClickListener(this);
 
-//        camera = "192.168.0.10";
+        camera = "192.168.0.10";
         String temp = String.format(Constrant.RTSP_CAMERA, camera);
         cameraRtsp_uri = Uri.parse(temp);
 
-//        koala = "192.168.0.53";
+        koala = "192.168.0.53";
         wsHelper = new WebSocketHelper(this, koala, camera);
         boolean open = wsHelper.open();
         if (open) {
@@ -262,19 +271,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStart() {
         super.onStart();
-        wsHelper.work();
+        if (wsHelper != null)
+            wsHelper.work();
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        wsHelper.work();
+
+        if (wsHelper != null)
+            wsHelper.work();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        wsHelper.pause();
+        if (wsHelper != null)
+            wsHelper.pause();
     }
 
     @Override
@@ -284,6 +297,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
         showFace(recognize);
+    }
+
+    PopupWindow window;
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
+            window.showAtLocation(root, Gravity.BOTTOM, 0, 0);
+            return true;
+        }
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (window != null) {
+                window.dismiss();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
@@ -299,6 +329,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (TextUtils.equals(face.type, RecognizeState.recognized.toString())) {
             if (face.person != null) {
                 avatar = face.person.avatar;
+//                koala = "192.168.1.50";
                 if (avatar.startsWith("http") == false) {
                     avatar = "http://" + koala + face.person.avatar;
                 }

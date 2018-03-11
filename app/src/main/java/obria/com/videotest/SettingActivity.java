@@ -24,8 +24,6 @@ public class SettingActivity extends AppCompatActivity {
 
     SharedPreferencesHelper spHelper;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,8 +87,22 @@ public class SettingActivity extends AppCompatActivity {
 
     private void loadData() {
 
-        editText_welcome.setText(spHelper.getStringValue(Constrant.key_welcome, ""));
-        edittext_recognizeserver.setText(spHelper.getStringValue(Constrant.key_server, ""));
-        edittext_camera.setText(spHelper.getStringValue(Constrant.key_camera, ""));
+        String a = spHelper.getStringValue(Constrant.key_welcome, "");
+        String b = spHelper.getStringValue(Constrant.key_server, "");
+        String c =spHelper.getStringValue(Constrant.key_camera, "");
+
+        if (TextUtils.isEmpty(a)) {
+            a = "绿景新洋房A栋二单元";
+        }
+        if (TextUtils.isEmpty(b)) {
+            b = "192.168.1.50";
+        }
+        if (TextUtils.isEmpty(c)) {
+            c = "192.168.1.5";
+        }
+
+        editText_welcome.setText(a);
+        edittext_recognizeserver.setText(b);
+        edittext_camera.setText(c);
     }
 }
