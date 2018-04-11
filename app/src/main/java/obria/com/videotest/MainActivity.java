@@ -29,10 +29,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import org.videolan.libvlc.IVLCVout;
-import org.videolan.libvlc.LibVLC;
-import org.videolan.libvlc.Media;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -71,12 +67,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Timer timer;
 
     ProgressBar progressBar;
-    SurfaceView surfaceView;
-    SurfaceHolder surfaceHolder;
-    LibVLC libVLC;
-    org.videolan.libvlc.MediaPlayer mediaPlayer;
-    IVLCVout ivlcVout;
-    Uri cameraRtsp_uri;
 
     TextView textView_title;
     CircleImageView circleImageView;
@@ -115,66 +105,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initPlayer() {
-
-        ArrayList<String> options = new ArrayList<>();
-        options.add(":network-caching=300");//网络缓存
-
-        libVLC = new LibVLC(options);
-        mediaPlayer = new org.videolan.libvlc.MediaPlayer(libVLC);
-        mediaPlayer.setEventListener(new org.videolan.libvlc.MediaPlayer.EventListener() {
-            @Override
-            public void onEvent(org.videolan.libvlc.MediaPlayer.Event event) {
-
-                switch (event.type) {
-                    case org.videolan.libvlc.MediaPlayer.Event.Buffering:
-                        if (event.getBuffering() > 10) {
-                            hideLoading();
-                        }
-                        break;
-                    case org.videolan.libvlc.MediaPlayer.Event.Opening:
-                        break;
-                    case org.videolan.libvlc.MediaPlayer.Event.EncounteredError:
-                        hideLoading();
-                        break;
-                }
-            }
-        });
-
-        Media media = new Media(libVLC, cameraRtsp_uri);
-        mediaPlayer.setMedia(media);
-
-        ivlcVout = mediaPlayer.getVLCVout();
-        ivlcVout.setVideoView(surfaceView);
-        ivlcVout.attachViews();
-        ivlcVout.addCallback(new IVLCVout.Callback() {
-            @Override
-            public void onNewLayout(IVLCVout vlcVout, int width, int height, int visibleWidth, int visibleHeight, int sarNum, int sarDen) {
-            }
-
-            @Override
-            public void onSurfacesCreated(IVLCVout vlcVout) {
-                int sw = getWindow().getDecorView().getWidth();
-                int sh = getWindow().getDecorView().getHeight();
-
-                if (sw * sh == 0) {
-                    Log.e(TAG, "Invalid surface size");
-                    return;
-                }
-            }
-
-            @Override
-            public void onSurfacesDestroyed(IVLCVout vlcVout) {
-
-            }
-
-            @Override
-            public void onHardwareAccelerationError(IVLCVout vlcVout) {
-
-            }
-        });
-        mediaPlayer.play();
-        surfaceView.setFocusable(true);
-        surfaceView.requestFocus();
     }
 
     private class MyTimerTask extends TimerTask {
@@ -210,7 +140,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initView() {
 
-        surfaceView = (SurfaceView) findViewById(R.id.surfaceview);
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
 
         textView_title = (TextView) findViewById(R.id.textview_title);
@@ -230,11 +159,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button_test = (ImageButton) findViewById(R.id.button_test);
         button_test.setOnClickListener(this);
 
-        camera = "192.168.0.10";
-        String temp = String.format(Constrant.RTSP_CAMERA, camera);
-        cameraRtsp_uri = Uri.parse(temp);
+//        camera = "192.168.0.10";
+//        String temp = String.format(Constrant.RTSP_CAMERA, camera);
+//        cameraRtsp_uri = Uri.parse(temp);
 
-        koala = "192.168.0.53";
+//        koala = "192.168.0.53";
         wsHelper = new WebSocketHelper(this, koala, camera);
         boolean open = wsHelper.open();
         if (open) {
@@ -335,7 +264,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 if (face.person.subject_type == 0) {
                     //业主
-                    name = "业主";
+                    name = "绿景新洋房欢迎您";
                     recognize.setBackground(this.getResources().getDrawable(R.drawable.yzbg));
                     statusImageView.setImageResource(R.mipmap.yz);
                     int yzColor = this.getResources().getColor(R.color.yz);
@@ -343,7 +272,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 if (face.person.subject_type == 1) {
                     //租户
-                    name = "租户";
+                    name = "绿景新洋房欢迎您";
                     recognize.setBackground(this.getResources().getDrawable(R.drawable.zhbg));
                     statusImageView.setImageResource(R.mipmap.zh);
                     int yzColor = this.getResources().getColor(R.color.zh);

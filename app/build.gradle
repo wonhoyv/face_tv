@@ -34,5 +34,4 @@ dependencies {
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'de.hdodenhof:circleimageview:2.2.0'
     testCompile 'junit:junit:4.12'
-    compile project(':vlc')
 }
