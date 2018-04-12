@@ -258,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (TextUtils.equals(face.type, RecognizeState.recognized.toString())) {
             if (face.person != null) {
                 avatar = face.person.avatar;
-//                koala = "192.168.1.50";
+                koala = "192.168.1.50";
                 if (avatar.startsWith("http") == false) {
                     avatar = "http://" + koala + face.person.avatar;
                 }
