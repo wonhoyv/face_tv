@@ -93,8 +93,8 @@ public class MainActivityBack extends AppCompatActivity implements View.OnClickL
 //            timer.schedule(new MyTimerTask(), 0, 1000);
             View view = LayoutInflater.from(this).inflate(R.layout.optionmenu, null);
             window = new PopupWindow(view, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            window.setTouchable(true);
-            window.setOutsideTouchable(true);
+//            window.setTouchable(true);
+//            window.setOutsideTouchable(true);
             window.setContentView(view);
             button_setting = (ImageButton) view.findViewById(R.id.button_setting);
             button_setting.setOnClickListener(this);
@@ -286,6 +286,7 @@ public class MainActivityBack extends AppCompatActivity implements View.OnClickL
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_MENU) {
             window.showAtLocation(root, Gravity.BOTTOM, 0, 0);
+
             return true;
         }
         if (keyCode == KeyEvent.KEYCODE_BACK) {
