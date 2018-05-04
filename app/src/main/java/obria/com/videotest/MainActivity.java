@@ -78,6 +78,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        String user = "";
         setContentView(R.layout.activity_main);
         root = (LinearLayout) findViewById(R.id.root);
         spHelper = new SharedPreferencesHelper(this);
