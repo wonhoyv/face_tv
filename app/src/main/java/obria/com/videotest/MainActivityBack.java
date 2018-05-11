@@ -3,6 +3,7 @@ package obria.com.videotest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,6 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -63,8 +65,6 @@ public class MainActivityBack extends AppCompatActivity implements View.OnClickL
     final static int POPUP_DELAY = 5000;
     WebSocketHelper wsHelper;
 
-    Timer timer;
-
     ProgressBar progressBar;
     SurfaceView surfaceView;
     SurfaceHolder surfaceHolder;
@@ -79,6 +79,7 @@ public class MainActivityBack extends AppCompatActivity implements View.OnClickL
     Bitmap bitmapStranger;
 
     LinearLayout root;
+    Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,17 +88,35 @@ public class MainActivityBack extends AppCompatActivity implements View.OnClickL
         root = (LinearLayout) findViewById(R.id.root);
         spHelper = new SharedPreferencesHelper(this);
         if (loadData()) {
+            handler = new Handler(new Handler.Callback() {
+                @Override
+                public boolean handleMessage(Message message) {
+                    if (message.what == 100) {
+                        OnOpen();
+                    }
+                    if (message.what == 101) {
+                        OnError();
+                    }
+                    return true;
+                }
+            });
+
             initView();
             initPlayer();
-//            timer = new Timer();
-//            timer.schedule(new MyTimerTask(), 0, 1000);
             View view = LayoutInflater.from(this).inflate(R.layout.optionmenu, null);
             window = new PopupWindow(view, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 //            window.setTouchable(true);
 //            window.setOutsideTouchable(true);
+            window.setFocusable(true);
+            //解决焦点问题
+            window.setBackgroundDrawable(new BitmapDrawable());
             window.setContentView(view);
             button_setting = (ImageButton) view.findViewById(R.id.button_setting);
             button_setting.setOnClickListener(this);
+
+            wsHelper = new WebSocketHelper(this, slave_koala, camera, handler);
+            boolean open = wsHelper.open();
+            wsHelper.setOnWebsocketMessageListener(this);
         }
     }
 
@@ -121,27 +140,47 @@ public class MainActivityBack extends AppCompatActivity implements View.OnClickL
             public void onEvent(org.videolan.libvlc.MediaPlayer.Event event) {
 
                 switch (event.type) {
-                    case org.videolan.libvlc.MediaPlayer.Event.Buffering:
+                    case MediaPlayer.Event.MediaChanged:
+                        Log.d(TAG, "MediaChanged");
+                        break;
+                    case MediaPlayer.Event.Opening:
+                        Log.d(TAG, "Opening");
+                        break;
+                    case MediaPlayer.Event.Buffering:
+                        Log.d(TAG, "Buffering");
                         if (event.getBuffering() > 10) {
                             hideLoading();
                         }
                         break;
-                    case org.videolan.libvlc.MediaPlayer.Event.Opening:
+                    case MediaPlayer.Event.Playing:
+                        Log.d(TAG, "Playing");
                         break;
-//                    case org.videolan.libvlc.MediaPlayer.Event.EncounteredError:
-//                        hideLoading();
-//                        break;
-                    case MediaPlayer.Event.ESDeleted:
-                        String a = "a";
+                    case MediaPlayer.Event.Paused:
+                        Log.d(TAG, "Paused");
                         break;
-                    case MediaPlayer.Event.MediaChanged:
-                        String b = "b";
                     case MediaPlayer.Event.Stopped:
-                        String c = "c";
+                        Log.d(TAG, "Stopped");
+                        break;
                     case MediaPlayer.Event.EndReached:
-                        String d = "d";
+                        Log.d(TAG, "EndReached");
+                        break;
+                    case MediaPlayer.Event.ESDeleted:
+                        Log.d(TAG, "ESDeleted");
+                        break;
                     case MediaPlayer.Event.EncounteredError:
-                        String e = "e";
+                        Log.d(TAG, "EncounteredError");
+                        break;
+                    case MediaPlayer.Event.TimeChanged:
+                        Log.d(TAG, "TimeChanged");
+                        break;
+                    case MediaPlayer.Event.PositionChanged:
+                        Log.d(TAG, "PositionChanged");
+                        break;
+                    case MediaPlayer.Event.SeekableChanged:
+                        Log.d(TAG, "SeekableChanged");
+                        break;
+                    case MediaPlayer.Event.PausableChanged:
+                        Log.d(TAG, "PausableChanged");
                         break;
                 }
             }
@@ -179,9 +218,6 @@ public class MainActivityBack extends AppCompatActivity implements View.OnClickL
 
             }
         });
-        mediaPlayer.play();
-        surfaceView.setFocusable(true);
-        surfaceView.requestFocus();
     }
 
     private boolean loadData() {
@@ -215,12 +251,6 @@ public class MainActivityBack extends AppCompatActivity implements View.OnClickL
         camera = "192.168.0.10";
         String temp = String.format(Constrant.RTSP_CAMERA, camera);
         cameraRtsp_uri = Uri.parse(temp);
-
-//        wsHelper = new WebSocketHelper(this, slave_koala, camera);
-//        boolean open = wsHelper.open();
-//        if (open) {
-//            wsHelper.setOnWebsocketMessageListener(this);
-//        }
     }
 
     private Handler mDelayHandler = new Handler(new Handler.Callback() {
@@ -299,9 +329,19 @@ public class MainActivityBack extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
-    public void OnError() {
+    public void OnOpen() {
 
+        mediaPlayer.play();
+        surfaceView.setFocusable(true);
+        surfaceView.requestFocus();
+    }
+
+    @Override
+    public void OnError() {
         ToastUtil.shortShow("网络异常");
+        int a = mediaPlayer.getPlayerState();
+        if (mediaPlayer != null)
+            mediaPlayer.stop();
     }
 
     private void showFace(FaceRecognized face) {
@@ -424,9 +464,6 @@ public class MainActivityBack extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (timer != null)
-            timer.cancel();
-        timer = null;
         wsHelper.HandClose();
     }
 }
