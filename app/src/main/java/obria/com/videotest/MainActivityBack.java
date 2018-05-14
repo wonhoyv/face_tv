@@ -248,7 +248,7 @@ public class MainActivityBack extends AppCompatActivity implements View.OnClickL
         recognize = (LinearLayout) findViewById(R.id.recognize);
         textView_name = (TextView) findViewById(R.id.textview_name);
 
-        camera = "192.168.0.10";
+//        camera = "192.168.0.10";
         String temp = String.format(Constrant.RTSP_CAMERA, camera);
         cameraRtsp_uri = Uri.parse(temp);
     }
@@ -311,17 +311,22 @@ public class MainActivityBack extends AppCompatActivity implements View.OnClickL
     }
 
     PopupWindow window;
-
+    boolean open = false;
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_MENU) {
+            open = true;
             window.showAtLocation(root, Gravity.BOTTOM, 0, 0);
-
             return true;
         }
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (window != null) {
+            if (window != null && open) {
+                open= false;
                 window.dismiss();
+            }
+            else
+            {
+                this.finish();
             }
             return true;
         }

@@ -11,4 +11,6 @@ public interface IWebSocketListener {
     void OnMessage(FaceRecognized recognize);
 
     void OnError();
+
+    void OnOpen();
 }

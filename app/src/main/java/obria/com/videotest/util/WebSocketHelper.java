@@ -1,6 +1,8 @@
 package obria.com.videotest.util;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
@@ -20,18 +22,20 @@ import obria.com.videotest.listener.IWebSocketListener;
 
 public class WebSocketHelper {
 
-    private MainActivity activity;
+    private Activity activity;
     private String koala;
     private String camera;
     private WebSocketClient client;
     private IWebSocketListener listener;
     private boolean mIsHandClose = false;
     private boolean mIsWork = false;
+    private  Handler handler;
 
-    public WebSocketHelper(Context context, String koala, String camera) {
-        this.activity = (MainActivity) context;
+    public WebSocketHelper(Context context, String koala, String camera, Handler handler) {
+        this.activity = (Activity) context;
         this.koala = koala;
         this.camera = camera;
+        this.handler = handler;
         mIsHandClose = false;
         mIsWork = true;
     }
@@ -39,11 +43,13 @@ public class WebSocketHelper {
     private void init() {
         String url = getUrl();
         try {
+//            url = "ws://192.168.0.7:4649/Echo";
             java.net.URI uri = java.net.URI.create(url);
             client = new WebSocketClient(uri) {
                 @Override
                 public void onOpen(ServerHandshake serverHandshake) {
                     String status = "open";
+                    handler.sendEmptyMessage(100);
                 }
 
                 @Override
@@ -77,28 +83,13 @@ public class WebSocketHelper {
                     if (mIsHandClose) {
                         return;
                     }
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (listener != null) {
-                                listener.OnError();
-                            }
-                        }
-                    });
+                    handler.sendEmptyMessage(101);
                     dispose();
                 }
 
                 @Override
                 public void onError(Exception e) {
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (listener != null) {
-                                listener.OnError();
-                            }
-                        }
-                    });
-                    error();
+//                    error();
                 }
             };
         } catch (Exception ex) {

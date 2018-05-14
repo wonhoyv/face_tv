@@ -10,16 +10,12 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,7 +26,6 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -64,8 +59,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     final static int POPUP_DELAY = 5000;
     WebSocketHelper wsHelper;
 
-    Timer timer;
-
     ProgressBar progressBar;
 
     TextView textView_title;
@@ -86,8 +79,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (loadData()) {
             initView();
             initPlayer();
-//            timer = new Timer();
-//            timer.schedule(new MyTimerTask(), 0, 1000);
             View view = LayoutInflater.from(this).inflate(R.layout.optionmenu, null);
             window = new PopupWindow(view, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             window.setTouchable(true);
@@ -130,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private boolean loadData() {
 
         welcome = spHelper.getStringValue(Constrant.key_welcome, "");
-        koala = spHelper.getStringValue(Constrant.key_server, "");
+        koala = spHelper.getStringValue(Constrant.key_main_server, "");
         camera = spHelper.getStringValue(Constrant.key_camera, "");
 
         if (TextUtils.isEmpty(welcome) || TextUtils.isEmpty(koala) || TextUtils.isEmpty(camera)) {
@@ -154,9 +145,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         textview_timeinfo = (TextView) findViewById(R.id.textview_timeinfo);
         recognize = (LinearLayout) findViewById(R.id.recognize);
 
-//        button_setting = (ImageButton) findViewById(R.id.button_setting);
-//        button_setting.setOnClickListener(this);
-
         textView_name = (TextView) findViewById(R.id.textview_name);
         button_test = (ImageButton) findViewById(R.id.button_test);
         button_test.setOnClickListener(this);
@@ -166,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        cameraRtsp_uri = Uri.parse(temp);
 
 //        koala = "192.168.0.53";
-        wsHelper = new WebSocketHelper(this, koala, camera);
+        wsHelper = new WebSocketHelper(this, koala, camera, new Handler());
         boolean open = wsHelper.open();
         if (open) {
             wsHelper.setOnWebsocketMessageListener(this);
@@ -251,6 +239,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void OnError() {
 
         ToastUtil.shortShow("网络异常");
+    }
+
+    @Override
+    public void OnOpen() {
+
     }
 
     private void showFace(FaceRecognized face) {
@@ -374,9 +367,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (timer != null)
-            timer.cancel();
-        timer = null;
         wsHelper.HandClose();
     }
 }

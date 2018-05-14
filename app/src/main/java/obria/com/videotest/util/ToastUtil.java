@@ -63,13 +63,13 @@ public class ToastUtil {
             if(toast == null){
                 toast = new Toast(context);
                 toast.setView(contentView);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.setDuration(Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.BOTTOM, 0, 0);
+                toast.setDuration(Toast.LENGTH_SHORT);
                 tvMsg.setText(msg);
             } else {
                 toast.setView(contentView);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.setDuration(Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.BOTTOM, 0, 0);
+                toast.setDuration(Toast.LENGTH_SHORT);
                 tvMsg.setText(msg);
             }
         } catch (Exception e){
@@ -85,12 +85,12 @@ public class ToastUtil {
             if(toast == null){
                 toast = new Toast(context);
                 toast.setView(contentView);
-                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.setGravity(Gravity.BOTTOM, 0, 0);
                 toast.setDuration(Toast.LENGTH_SHORT);
                 tvMsg.setText(msg);
             } else {
                 toast.setView(contentView);
-                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.setGravity(Gravity.BOTTOM, 0, 0);
                 toast.setDuration(Toast.LENGTH_SHORT);
                 tvMsg.setText(msg);
             }

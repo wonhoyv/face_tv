@@ -7,6 +7,6 @@
           android:background="@drawable/dialog_toast_bg"
           android:gravity="center"
           android:padding="8dp"
-          android:textColor="@android:color/white"
-          android:textSize="24sp"
+          android:textColor="#d4237a"
+          android:textSize="18sp"
     />
