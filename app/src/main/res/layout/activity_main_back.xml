@@ -41,7 +41,7 @@
                 android:textColor="@color/white"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:background="@color/color_blue"
+                android:background="#012C57"
                 android:textSize="32sp" />
 
         </RelativeLayout>
