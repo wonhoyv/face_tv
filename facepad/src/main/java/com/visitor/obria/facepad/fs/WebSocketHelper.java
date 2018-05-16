@@ -2,8 +2,12 @@ package com.visitor.obria.facepad.fs;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.visitor.obria.facepad.entity.FaceRecognized;
@@ -25,7 +29,7 @@ public class WebSocketHelper {
     private WebSocketClient client;
     private boolean mIsHandClose = false;
     private boolean mIsWork = false;
-    private  Handler handler;
+    private Handler handler;
 
     public WebSocketHelper(Context context, String koala, String camera, Handler handler) {
         this.activity = (Activity) context;
@@ -39,12 +43,14 @@ public class WebSocketHelper {
     private void init() {
         String url = getUrl();
         try {
-            java.net.URI uri = java.net.URI.create(url);
+//            java.net.URI uri = java.net.URI.create(url);
+            java.net.URI uri = java.net.URI.create("ws://192.168.0.7:4649/Echo");
             client = new WebSocketClient(uri) {
                 @Override
                 public void onOpen(ServerHandshake serverHandshake) {
                     String status = "open";
-                    handler.sendEmptyMessage(100);
+                    handler.sendEmptyMessage(101);
+                    Log.d("ysj", "open");
                 }
 
                 @Override
@@ -58,15 +64,14 @@ public class WebSocketHelper {
 
                     Gson gson = new Gson();
                     try {
-                        final FaceRecognized face = gson.fromJson(json, FaceRecognized.class);
-                        activity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-//                                if (listener != null) {
-//                                    listener.OnMessage(face);
-//                                }
-                            }
-                        });
+//                        final FaceRecognized face = gson.fromJson(json, FaceRecognized.class);
+                        Log.d("ysj", "message is coming");
+                        Bundle bundle = new Bundle();
+                        bundle.putString("avatar", json);
+                        Message message = new Message();
+                        message.what=100;
+                        message.setData(bundle);
+                        handler.sendMessage(message);
 
                     } catch (Exception ex) {
                         ex.printStackTrace();
@@ -78,7 +83,8 @@ public class WebSocketHelper {
                     if (mIsHandClose) {
                         return;
                     }
-                    handler.sendEmptyMessage(101);
+                    Log.d("ysj", "close");
+                    handler.sendEmptyMessage(102);
                     dispose();
                 }
 
