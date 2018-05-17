@@ -28,7 +28,7 @@ public class FaceActivity extends AppCompatActivity {
     private void show() {
         Bundle bundle = this.getIntent().getBundleExtra("face");
         String avatar = bundle.getString("avatar");
-        Picasso.with(this).load(avatar).placeholder(R.mipmap.son).into(iv_face);
+        Picasso.with(this).load(avatar).into(iv_face);
     }
 
     private void init() {
@@ -42,12 +42,12 @@ public class FaceActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(FaceActivity.this, MainActivity.class);
                 startActivity(intent);
-                FaceActivity.this.finish();
-//                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+//                FaceActivity.this.finish();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 //                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 overridePendingTransition(R.anim.anim_enter, R.anim.anim_exit);
             }
-        }, 3000);
+        }, 5*1000);
     }
 
 }

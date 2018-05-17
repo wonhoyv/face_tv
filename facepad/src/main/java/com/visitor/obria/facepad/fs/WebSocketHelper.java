@@ -43,8 +43,8 @@ public class WebSocketHelper {
     private void init() {
         String url = getUrl();
         try {
-//            java.net.URI uri = java.net.URI.create(url);
-            java.net.URI uri = java.net.URI.create("ws://192.168.0.7:4649/Echo");
+            java.net.URI uri = java.net.URI.create(url);
+//            java.net.URI uri = java.net.URI.create("ws://192.168.0.7:4649/Echo");
             client = new WebSocketClient(uri) {
                 @Override
                 public void onOpen(ServerHandshake serverHandshake) {
@@ -64,12 +64,19 @@ public class WebSocketHelper {
 
                     Gson gson = new Gson();
                     try {
-//                        final FaceRecognized face = gson.fromJson(json, FaceRecognized.class);
+                        final FaceRecognized face = gson.fromJson(json, FaceRecognized.class);
+
+                        String temp = face.person.avatar;
+                        String avatar = "";
+                        if (temp.startsWith("http"))
+                            avatar = temp;
+                        else
+                            avatar = "http://192.168.0.50" + temp;
                         Log.d("ysj", "message is coming");
                         Bundle bundle = new Bundle();
-                        bundle.putString("avatar", json);
+                        bundle.putString("avatar", avatar);
                         Message message = new Message();
-                        message.what=100;
+                        message.what = 100;
                         message.setData(bundle);
                         handler.sendMessage(message);
 

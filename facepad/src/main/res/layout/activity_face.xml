@@ -9,22 +9,22 @@
     <View
         android:id="@+id/view_top"
         android:layout_width="match_parent"
-        android:layout_height="100dp"></View>
+        android:layout_height="200dp"></View>
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="320dp"
+        android:layout_width="600dp"
         android:layout_centerHorizontal="true"
-        android:src="@mipmap/son"
         android:layout_below="@+id/view_top"
         android:id="@+id/iv_face"
-        android:layout_height="320dp" />
+        android:layout_height="600dp" />
 
     <TextView
         android:id="@+id/tv_name"
         android:layout_below="@+id/iv_face"
         android:layout_width="match_parent"
         android:text="杨林哲"
-        android:textSize="24sp"
+        android:textSize="@dimen/recognize_size"
+        android:layout_marginTop="32dp"
         android:gravity="center"
         android:layout_height="46dp" />
 
@@ -40,7 +40,7 @@
     <TextView
         android:id="@+id/tv_welcome"
         android:text="欢迎光临"
-        android:textSize="24sp"
+        android:textSize="@dimen/recognize_size"
         android:gravity="center"
         android:layout_below="@+id/tv_name"
         android:layout_width="match_parent"

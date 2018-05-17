@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.visitor.obria.facepad.fs.WebSocketHelper;
 import com.visitor.obria.facepad.service.FSService;
+import com.visitor.obria.facepad.util.DateUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -22,8 +23,9 @@ public class MainActivity extends AppCompatActivity {
     Intent intentMyService;
     Timer timer;
     TextView tv_time;
+    TextView tv_week;
     WebSocketHelper ws;
-    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private void startMyService() {
 
         tv_time = (TextView) findViewById(R.id.tv_time);
+        tv_week = (TextView) findViewById(R.id.tv_week);
 
 //        intentMyService = new Intent(this, FSService.class);
 //        startService(intentMyService);
@@ -42,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         timer = new Timer();
         timer.schedule(timerTask, 0, 1000);
 
-        ws = new WebSocketHelper(null, "", "", handler);
+        ws = new WebSocketHelper(this, "192.168.0.50", "192.168.0.10", handler);
         ws.open();
     }
 
@@ -55,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
 //                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 //                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-
                 overridePendingTransition(R.anim.anim_enter, R.anim.anim_exit);
             }
             return false;
@@ -73,8 +75,9 @@ public class MainActivity extends AppCompatActivity {
     private android.os.Handler timeHandler = new android.os.Handler(new android.os.Handler.Callback() {
         @Override
         public boolean handleMessage(Message message) {
-            String ok = sdf.format(new Date());
-            tv_time.setText(ok);
+
+            tv_time.setText(DateUtil.getTime());
+            tv_week.setText(DateUtil.getWeek());
             return false;
         }
     });
