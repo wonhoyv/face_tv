@@ -41,7 +41,7 @@ public class WebSocketHelper {
     }
 
     private void init() {
-        String url = getUrl();
+        String url = Constrant.getUrl(koala, camera);
         try {
             java.net.URI uri = java.net.URI.create(url);
 //            java.net.URI uri = java.net.URI.create("ws://192.168.0.7:4649/Echo");
@@ -160,14 +160,4 @@ public class WebSocketHelper {
             return false;
         }
     }
-
-    private String getUrl() {
-        String url = String.format("ws://%s:9000/video", koala);
-        String rtsp = String.format(Constrant.RTSP_CAMERA, camera);
-        String rtspUrlEncode = Util.toURLEncoded(rtsp);
-        String result = url + "?url=" + rtspUrlEncode;
-        return result;
-    }
-
-
 }

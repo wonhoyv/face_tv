@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.visitor.obria.facepad.fs.WebSocketHelper;
 import com.visitor.obria.facepad.service.FSService;
 import com.visitor.obria.facepad.util.DateUtil;
+import com.visitor.obria.facepad.util.SharedPreferencesHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     TextView tv_time;
     TextView tv_week;
     WebSocketHelper ws;
+    SharedPreferencesHelper sp;
 
 
     @Override
@@ -36,16 +38,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void startMyService() {
 
+        sp = SharedPreferencesHelper.getInstance(this);
+
         tv_time = (TextView) findViewById(R.id.tv_time);
         tv_week = (TextView) findViewById(R.id.tv_week);
-
-//        intentMyService = new Intent(this, FSService.class);
-//        startService(intentMyService);
 
         timer = new Timer();
         timer.schedule(timerTask, 0, 1000);
 
-        ws = new WebSocketHelper(this, "192.168.0.50", "192.168.0.10", handler);
+        String koala = sp.getStringValue(SharedPreferencesHelper.KOALA_IP, "");
+        String camera = sp.getStringValue(SharedPreferencesHelper.CAMERA_IP, "");
+
+        ws = new WebSocketHelper(this, koala, camera, handler);
         ws.open();
     }
 
@@ -56,8 +60,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(getBaseContext(), FaceActivity.class);
                 intent.putExtra("face", message.getData());
                 startActivity(intent);
-//                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-//                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 overridePendingTransition(R.anim.anim_enter, R.anim.anim_exit);
             }
             return false;
