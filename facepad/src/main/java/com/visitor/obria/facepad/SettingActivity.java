@@ -63,6 +63,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             if (open) {
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.anim_enter, R.anim.anim_exit);
                 this.finish();
             } else {
                 ToastUtil.Show(this, "连接失败，请检查网络！");

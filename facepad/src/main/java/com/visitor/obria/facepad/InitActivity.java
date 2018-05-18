@@ -32,8 +32,8 @@ public class InitActivity extends AppCompatActivity {
         } else {
             WSHelper ws = new WSHelper(koala, camera);
             boolean open = ws.Open();
+            ws.Close();
             if (open) {
-                ws.Close();
                 goToMainActivity();
 
             } else {
@@ -46,11 +46,13 @@ public class InitActivity extends AppCompatActivity {
     private void goToMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.anim_enter, R.anim.anim_exit);
     }
 
     private void goToSettingActivity() {
 
         Intent intent = new Intent(this, SettingActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.anim_enter, R.anim.anim_exit);
     }
 }
