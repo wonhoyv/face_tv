@@ -42,7 +42,7 @@
                 android:gravity="center"
                 android:textStyle="bold"
                 android:background="#012C57"
-                android:textSize="60sp" />
+                android:textSize="64sp" />
 
         </RelativeLayout>
 
