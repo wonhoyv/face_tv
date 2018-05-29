@@ -71,7 +71,9 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         }
 
         if (view.getId() == R.id.btnExit) {
-            this.finish();
+//            this.finish();
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(0);
         }
     }
 }

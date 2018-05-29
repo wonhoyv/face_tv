@@ -71,7 +71,7 @@ public class WebSocketHelper {
                         if (temp.startsWith("http"))
                             avatar = temp;
                         else
-                            avatar = "http://192.168.0.50" + temp;
+                            avatar = "http://" + koala + temp;
                         Log.d("ysj", "message is coming");
                         Bundle bundle = new Bundle();
                         bundle.putString("avatar", avatar);

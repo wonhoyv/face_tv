@@ -23,35 +23,44 @@
             android:layout_height="match_parent"></View>
 
         <LinearLayout
-            android:layout_width="260dp"
+            android:layout_width="360dp"
             android:orientation="vertical"
             android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="请设置人脸识别服务"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="@dimen/settingtextsize"
+                android:layout_marginBottom="12dp"
+                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
-                android:layout_height="60dp">
+                android:layout_height="80dp">
                 <TextView
                     style="@style/tvLogin"
                     android:text="识别服务器:" />
 
                 <EditText
                     android:id="@+id/et_koala"
-                    android:layout_width="match_parent"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
-                android:layout_height="60dp">
+                android:layout_height="80dp">
                 <TextView
                     android:text="摄像机:"
                     style="@style/tvLogin" />
 
                 <EditText
                     android:id="@+id/et_camera"
-                    android:layout_width="match_parent"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
@@ -59,17 +68,20 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:gravity="center"
-                android:layout_height="60dp">
-                <Button
-                    android:id="@+id/btnSave"
-                    android:text="确定"
-                    style="@style/btnLogin"/>
+                android:layout_height="80dp">
 
                 <Button
                     android:id="@+id/btnExit"
                     android:layout_marginLeft="6dp"
-                    style="@style/btnLogin"
+                    style="@style/btnExit"
                     android:text="退出" />
+
+                <Button
+                    android:layout_marginLeft="12dp"
+                    android:id="@+id/btnSave"
+                    android:text="保存"
+                    style="@style/btnSave"/>
+
             </LinearLayout>
 
 

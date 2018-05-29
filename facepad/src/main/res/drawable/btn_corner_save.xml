@@ -3,11 +3,11 @@
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
             <corners android:radius="10dp"/>
-            <stroke
-                android:width= "2dp"
-                android:color= "@color/color_red" />
+            <!--<stroke-->
+                <!--android:width= "2dp"-->
+                <!--android:color= "@color/color_blue" />-->
             <!--定义实心颜色，也就是填充颜色值-->
-            <solid android:color= "@color/color_red" />
+            <solid android:color= "@color/color_blue" />
             <!--阴影-->
         </shape>
     </item>
@@ -17,7 +17,7 @@
             <corners android:radius="10dp"/>
             <stroke
                 android:width= "2dp"
-                android:color= "@color/color_red" />
+                android:color= "@color/color_blue" />
             <!--定义实心颜色，也就是填充颜色值-->
             <solid android:color="#ffffff" />
             <!--阴影-->

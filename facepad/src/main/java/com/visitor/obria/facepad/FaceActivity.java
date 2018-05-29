@@ -47,7 +47,7 @@ public class FaceActivity extends AppCompatActivity {
 //                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 overridePendingTransition(R.anim.anim_enter, R.anim.anim_exit);
             }
-        }, 5*1000);
+        }, 10*1000);
     }
 
 }
