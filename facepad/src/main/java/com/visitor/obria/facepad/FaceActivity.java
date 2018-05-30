@@ -25,6 +25,10 @@ public class FaceActivity extends AppCompatActivity {
         show();
     }
 
+    protected int getlayout() {
+        return R.layout.activity_face;
+    }
+
     private void show() {
         Bundle bundle = this.getIntent().getBundleExtra("face");
         String avatar = bundle.getString("avatar");
@@ -42,12 +46,10 @@ public class FaceActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(FaceActivity.this, MainActivity.class);
                 startActivity(intent);
-//                FaceActivity.this.finish();
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-//                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 overridePendingTransition(R.anim.anim_enter, R.anim.anim_exit);
             }
-        }, 10*1000);
+        }, 3 * 1000);
     }
 
 }

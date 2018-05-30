@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import com.visitor.obria.facepad.fs.WSHelper;
 import com.visitor.obria.facepad.util.SharedPreferencesHelper;
@@ -27,6 +28,7 @@ public class InitActivity extends AppCompatActivity {
         String camera = sp.getStringValue(SharedPreferencesHelper.CAMERA_IP, "");
 
         if (TextUtils.isEmpty(koala) || TextUtils.isEmpty(camera)) {
+            Toast.makeText(this, "aaaa", Toast.LENGTH_SHORT).show();
             goToSettingActivity();
             this.finish();
         } else {
@@ -37,6 +39,7 @@ public class InitActivity extends AppCompatActivity {
                 goToMainActivity();
 
             } else {
+                Toast.makeText(this, "bbbb", Toast.LENGTH_SHORT).show();
                 goToSettingActivity();
                 this.finish();
             }

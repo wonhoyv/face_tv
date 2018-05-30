@@ -11,6 +11,16 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="FaceActivityTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <!--标题栏-->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <!--标题-->
+        <item name="colorPrimaryDark">#ffffff</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <style name="myAnimationActivity" mce_bogus="1" parent="@android:style/Animation.Activity">
 
         <item name="colorPrimary">@color/colorPrimary</item>
