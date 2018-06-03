@@ -17,20 +17,17 @@ public class InitActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_init);
-
         sp = SharedPreferencesHelper.getInstance(this);
         initView();
     }
 
     private void initView() {
 
-        String koala = sp.getStringValue(SharedPreferencesHelper.KOALA_IP, "");
-        String camera = sp.getStringValue(SharedPreferencesHelper.CAMERA_IP, "");
+        final String koala = sp.getStringValue(SharedPreferencesHelper.KOALA_IP, "");
+        final String camera = sp.getStringValue(SharedPreferencesHelper.CAMERA_IP, "");
 
         if (TextUtils.isEmpty(koala) || TextUtils.isEmpty(camera)) {
-            Toast.makeText(this, "aaaa", Toast.LENGTH_SHORT).show();
             goToSettingActivity();
-            this.finish();
         } else {
             WSHelper ws = new WSHelper(koala, camera);
             boolean open = ws.Open();
@@ -39,9 +36,7 @@ public class InitActivity extends AppCompatActivity {
                 goToMainActivity();
 
             } else {
-                Toast.makeText(this, "bbbb", Toast.LENGTH_SHORT).show();
                 goToSettingActivity();
-                this.finish();
             }
         }
     }
@@ -50,6 +45,7 @@ public class InitActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.anim_enter, R.anim.anim_exit);
+        this.finish();
     }
 
     private void goToSettingActivity() {
@@ -57,5 +53,6 @@ public class InitActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SettingActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.anim_enter, R.anim.anim_exit);
+        this.finish();
     }
 }

@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme"
         android:supportsRtl="true">
-        <activity android:name=".InitActivity"  android:theme="@style/AppTheme">
+        <activity android:name=".InitActivity"  android:theme="@style/FaceActivityTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,10 +21,11 @@
         </activity>
         <activity android:name=".FaceActivity"  android:theme="@style/FaceActivityTheme" />
 
-        <receiver android:name=".receiver.BootComplete">
-            <intent-filter>
+        <receiver android:name=".receiver.BootComplete"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter android:priority="100">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>

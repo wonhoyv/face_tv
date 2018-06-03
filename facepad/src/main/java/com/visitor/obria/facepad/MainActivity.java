@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         sp = SharedPreferencesHelper.getInstance(this);
 
         tv_time = (TextView) findViewById(R.id.tv_time);
-        tv_week = (TextView) findViewById(R.id.tv_week);
+//        tv_week = (TextView) findViewById(R.id.tv_week);
 
         timer = new Timer();
         timer.schedule(timerTask, 0, 5 * 1000);
@@ -67,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
 
                 if (ActivityCollector.isActivityExist(FaceActivity.class)) {
                     Log.d("ysj", "showing");
+
+                    FaceActivity test = (FaceActivity) ActivityCollector.getActivity(FaceActivity.class);
+                    if (test != null) {
+                        test.Update();
+                    }
                     return true;
                 }
 
@@ -91,8 +96,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean handleMessage(Message message) {
 
-            tv_time.setText(DateUtil.getTime());
-            tv_week.setText(DateUtil.getWeek());
+            tv_time.setText(DateUtil.getWeek() + " " + DateUtil.getTime());
+//            tv_week.setText(DateUtil.getWeek());
             return false;
         }
     });

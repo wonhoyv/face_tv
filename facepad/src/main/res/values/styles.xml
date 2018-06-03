@@ -21,19 +21,9 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="myAnimationActivity" mce_bogus="1" parent="@android:style/Animation.Activity">
-
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="windowNoTitle">true</item>
-        <item name="android:activityOpenEnterAnimation">@anim/anim_enter</item>
-        <item name="android:activityOpenExitAnimation">@anim/anim_exit</item>
-    </style>
-
     <style name="tvLogin">
         <item name="android:gravity">right|center_vertical</item>
-        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_width">120dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:singleLine">true</item>
         <item name="android:textSize">@dimen/settingtextsize</item>

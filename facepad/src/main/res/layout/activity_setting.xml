@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/root"
     tools:context="com.visitor.obria.facepad.SettingActivity">
 
     <View
@@ -32,8 +33,8 @@
                 android:text="请设置人脸识别服务"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:textSize="@dimen/settingtextsize"
-                android:layout_marginBottom="12dp"
+                android:textSize="36sp"
+                android:layout_marginBottom="64dp"
                 android:layout_height="wrap_content" />
 
             <LinearLayout
@@ -42,11 +43,12 @@
                 android:layout_height="80dp">
                 <TextView
                     style="@style/tvLogin"
-                    android:text="识别服务器:" />
+                    android:text="服务:" />
 
                 <EditText
                     android:id="@+id/et_koala"
-                    android:layout_width="150dp"
+                    android:layout_width="200dp"
+                    android:textSize="@dimen/settingtextsize"
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
@@ -60,7 +62,8 @@
 
                 <EditText
                     android:id="@+id/et_camera"
-                    android:layout_width="150dp"
+                    android:layout_width="200dp"
+                    android:textSize="@dimen/settingtextsize"
                     android:layout_height="wrap_content" />
             </LinearLayout>
 

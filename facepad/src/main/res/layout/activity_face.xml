@@ -22,9 +22,9 @@
 
         <TextView
             android:id="@+id/tv_name"
+            android:textStyle="bold"
             android:layout_below="@+id/iv_face"
             android:layout_width="match_parent"
-            android:text="杨林哲"
             android:textSize="@dimen/recognize_size"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="32dp"
@@ -32,16 +32,19 @@
             android:layout_height="wrap_content" />
 
         <View
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="4dp"
             android:layout_gravity="center"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
             android:layout_marginBottom="4dp"
             android:background="@android:color/holo_red_dark"></View>
 
         <TextView
             android:id="@+id/tv_welcome"
             android:text="欢迎光临"
+            android:textStyle="bold"
             android:textSize="@dimen/recognize_size"
             android:gravity="center"
             android:layout_marginTop="32dp"
