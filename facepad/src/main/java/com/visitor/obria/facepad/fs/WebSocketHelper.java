@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.visitor.obria.facepad.entity.FaceRecognized;
+import com.visitor.obria.facepad.entity.RecognizeState;
 import com.visitor.obria.facepad.util.Util;
 
 import org.java_websocket.client.WebSocketClient;
@@ -41,7 +42,7 @@ public class WebSocketHelper {
     }
 
     private void init() {
-        String url = getUrl();
+        String url = Constrant.getUrl(koala, camera);
         try {
             java.net.URI uri = java.net.URI.create(url);
 //            java.net.URI uri = java.net.URI.create("ws://192.168.0.7:4649/Echo");
@@ -66,19 +67,33 @@ public class WebSocketHelper {
                     try {
                         final FaceRecognized face = gson.fromJson(json, FaceRecognized.class);
 
-                        String temp = face.person.avatar;
-                        String avatar = "";
-                        if (temp.startsWith("http"))
-                            avatar = temp;
-                        else
-                            avatar = "http://192.168.0.50" + temp;
-                        Log.d("ysj", "message is coming");
-                        Bundle bundle = new Bundle();
-                        bundle.putString("avatar", avatar);
-                        Message message = new Message();
-                        message.what = 100;
-                        message.setData(bundle);
-                        handler.sendMessage(message);
+                        String type = face.type;
+                        if (TextUtils.equals(type, RecognizeState.recognized.toString())) {
+                            String temp = face.person.avatar;
+                            String avatar = "";
+                            if (temp.startsWith("http"))
+                                avatar = temp;
+                            else
+                                avatar = "http://" + koala + temp;
+                            Log.d("ysj", "message is coming");
+                            Bundle bundle = new Bundle();
+                            bundle.putString("avatar", avatar);
+                            bundle.putString("name", face.person.name);
+                            bundle.putString("type", "0");
+                            Message message = new Message();
+                            message.what = 100;
+                            message.setData(bundle);
+                            handler.sendMessage(message);
+                        }
+                        if (TextUtils.equals(type, RecognizeState.unrecognized.toString())) {
+                            Bundle bundle = new Bundle();
+                            bundle.putString("avatar", face.data.face.image);
+                            bundle.putString("type", "1");
+                            Message message = new Message();
+                            message.what = 100;
+                            message.setData(bundle);
+                            handler.sendMessage(message);
+                        }
 
                     } catch (Exception ex) {
                         ex.printStackTrace();
@@ -160,14 +175,4 @@ public class WebSocketHelper {
             return false;
         }
     }
-
-    private String getUrl() {
-        String url = String.format("ws://%s:9000/video", koala);
-        String rtsp = String.format(Constrant.RTSP_CAMERA, camera);
-        String rtspUrlEncode = Util.toURLEncoded(rtsp);
-        String result = url + "?url=" + rtspUrlEncode;
-        return result;
-    }
-
-
 }

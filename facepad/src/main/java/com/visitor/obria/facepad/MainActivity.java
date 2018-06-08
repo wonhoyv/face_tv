@@ -9,7 +9,9 @@ import android.widget.TextView;
 
 import com.visitor.obria.facepad.fs.WebSocketHelper;
 import com.visitor.obria.facepad.service.FSService;
+import com.visitor.obria.facepad.util.ActivityCollector;
 import com.visitor.obria.facepad.util.DateUtil;
+import com.visitor.obria.facepad.util.SharedPreferencesHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -25,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     TextView tv_time;
     TextView tv_week;
     WebSocketHelper ws;
-
+    SharedPreferencesHelper sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,28 +38,46 @@ public class MainActivity extends AppCompatActivity {
 
     private void startMyService() {
 
-        tv_time = (TextView) findViewById(R.id.tv_time);
-        tv_week = (TextView) findViewById(R.id.tv_week);
+        sp = SharedPreferencesHelper.getInstance(this);
 
-//        intentMyService = new Intent(this, FSService.class);
-//        startService(intentMyService);
+        tv_time = (TextView) findViewById(R.id.tv_time);
+//        tv_week = (TextView) findViewById(R.id.tv_week);
 
         timer = new Timer();
-        timer.schedule(timerTask, 0, 1000);
+        timer.schedule(timerTask, 0, 5 * 1000);
 
-        ws = new WebSocketHelper(this, "192.168.0.50", "192.168.0.10", handler);
+        String koala = sp.getStringValue(SharedPreferencesHelper.KOALA_IP, "");
+        String camera = sp.getStringValue(SharedPreferencesHelper.CAMERA_IP, "");
+
+        ws = new WebSocketHelper(this, koala, camera, handler);
         ws.open();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("ysj", "resume");
     }
 
     private android.os.Handler handler = new android.os.Handler(new android.os.Handler.Callback() {
         @Override
         public boolean handleMessage(Message message) {
+
             if (message.what == 100) {
+
+                if (ActivityCollector.isActivityExist(FaceActivity.class)) {
+                    Log.d("ysj", "showing");
+
+                    FaceActivity test = (FaceActivity) ActivityCollector.getActivity(FaceActivity.class);
+                    if (test != null) {
+                        test.Update();
+                    }
+                    return true;
+                }
+
                 Intent intent = new Intent(getBaseContext(), FaceActivity.class);
                 intent.putExtra("face", message.getData());
                 startActivity(intent);
-//                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-//                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 overridePendingTransition(R.anim.anim_enter, R.anim.anim_exit);
             }
             return false;
@@ -76,8 +96,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean handleMessage(Message message) {
 
-            tv_time.setText(DateUtil.getTime());
-            tv_week.setText(DateUtil.getWeek());
+            tv_time.setText(DateUtil.getWeek() + " " + DateUtil.getTime());
+//            tv_week.setText(DateUtil.getWeek());
             return false;
         }
     });

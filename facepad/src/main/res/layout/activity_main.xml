@@ -2,39 +2,80 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#ffa500"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="com.visitor.obria.facepad.MainActivity">
+    android:background="@color/color_main_background"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.visitor.obria.facepad.MainActivity">
+
+   <ImageView
+       android:src="@mipmap/dl"
+       android:layout_marginLeft="12dp"
+       android:layout_alignParentTop="true"
+       android:layout_alignParentLeft="true"
+       android:layout_width="wrap_content"
+       android:id="@+id/iv_logo"
+       android:layout_height="wrap_content" />
 
    <TextView
-       android:layout_centerVertical="true"
-       android:id="@+id/tv_factory"
-       android:text="欢迎光临大陆汽车"
+       android:id="@+id/tv_time"
+       android:layout_alignParentTop="true"
+       android:layout_alignParentRight="true"
+       android:textColor="@color/defaultcolor"
        android:gravity="center"
+       android:textSize="24sp"
+       android:layout_marginRight="12dp"
+       android:layout_marginTop="16dp"
+       android:text="fdfdfdf"
+       android:textStyle="bold"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" />
+
+   <TextView
+       android:layout_below="@+id/iv_logo"
+       android:layout_marginTop="300dp"
+       android:id="@+id/tv_factory"
+       android:text="大陆汽车投资(上海)有限公司"
+       android:gravity="center"
+       android:textColor="@color/defaultcolor"
        android:textSize="@dimen/init"
        android:textStyle="bold"
        android:layout_width="match_parent"
        android:layout_height="wrap_content" />
 
    <TextView
-       android:id="@+id/tv_time"
+       android:id="@+id/tv_welcome"
        android:layout_marginTop="46dp"
        android:layout_below="@id/tv_factory"
-       android:text="00:00"
+       android:text="欢迎您"
+       android:textColor="@color/defaultcolor"
        android:gravity="center"
        android:textSize="32sp"
        android:textStyle="bold"
        android:layout_width="match_parent"
        android:layout_height="wrap_content" />
 
-   <TextView
-       android:id="@+id/tv_week"
-       android:layout_marginTop="46dp"
-       android:layout_below="@id/tv_time"
-       android:text=""
-       android:gravity="center"
-       android:textSize="32sp"
-       android:textStyle="bold"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content" />
+   <!--<TextView-->
+       <!--android:id="@+id/tv_time"-->
+       <!--android:layout_marginTop="46dp"-->
+       <!--android:layout_below="@id/tv_welcome"-->
+       <!--android:text="00:00"-->
+       <!--android:textColor="@color/defaultcolor"-->
+       <!--android:gravity="center"-->
+       <!--android:textSize="32sp"-->
+       <!--android:textStyle="bold"-->
+       <!--android:layout_width="match_parent"-->
+       <!--android:layout_height="wrap_content" />-->
+
+   <!--<TextView-->
+       <!--android:id="@+id/tv_week"-->
+       <!--android:layout_marginTop="46dp"-->
+       <!--android:layout_below="@id/tv_time"-->
+       <!--android:text=""-->
+       <!--android:textColor="@color/defaultcolor"-->
+       <!--android:gravity="center"-->
+       <!--android:textSize="32sp"-->
+       <!--android:textStyle="bold"-->
+       <!--android:layout_width="match_parent"-->
+       <!--android:layout_height="wrap_content" />-->
 </RelativeLayout>

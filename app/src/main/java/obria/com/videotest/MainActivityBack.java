@@ -240,6 +240,26 @@ public class MainActivityBack extends AppCompatActivity implements View.OnClickL
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
 
         textView_title = (TextView) findViewById(R.id.textview_title);
+
+        welcome = welcome.trim();
+        StringBuilder sb = new StringBuilder();
+//        int len = welcome.trim().length();
+//        for (int i = 0; i < len; i++) {
+//            String item = welcome.substring(i, i + 1);
+//            sb.append(item + " ");
+//        }
+//        welcome = sb.toString();
+
+        char[] chars = welcome.toCharArray();
+        for (char c : chars) {
+            int i = (int) c;
+            if (c == '2') {
+                sb.append(c);
+            } else {
+                sb.append(c + " ");
+            }
+        }
+        welcome = sb.toString().toString();
         textView_title.setText(welcome);
 
         circleImageView = (CircleImageView) findViewById(R.id.cirleImageView);
@@ -312,6 +332,7 @@ public class MainActivityBack extends AppCompatActivity implements View.OnClickL
 
     PopupWindow window;
     boolean open = false;
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_MENU) {
@@ -321,11 +342,9 @@ public class MainActivityBack extends AppCompatActivity implements View.OnClickL
         }
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (window != null && open) {
-                open= false;
+                open = false;
                 window.dismiss();
-            }
-            else
-            {
+            } else {
                 this.finish();
             }
             return true;

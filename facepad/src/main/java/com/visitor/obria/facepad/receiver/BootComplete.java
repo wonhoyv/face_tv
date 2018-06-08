@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.visitor.obria.facepad.FaceActivity;
+import com.visitor.obria.facepad.InitActivity;
 import com.visitor.obria.facepad.MainActivity;
 
 
@@ -20,7 +21,7 @@ public class BootComplete extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         if (intent.getAction().equals(action_boot)){
-            Intent mBootIntent = new Intent(context, MainActivity.class);
+            Intent mBootIntent = new Intent(context, InitActivity.class);
             mBootIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(mBootIntent);
         }
