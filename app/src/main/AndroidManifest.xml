@@ -24,6 +24,13 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".MainActivityBack" />
         <activity android:name=".Main2Activity"></activity>
+        <receiver android:name=".BootBroadcastReceiver">
+            <intent-filter android:priority="100">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.HOME"/>
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>
