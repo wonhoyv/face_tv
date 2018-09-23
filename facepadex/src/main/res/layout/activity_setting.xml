@@ -80,7 +80,7 @@
                     android:layout_marginLeft="6dp"
                     android:layout_height="wrap_content"
                     android:layout_width="120dp"
-                    android:text="退出" />
+                    android:text="返回" />
 
                 <Button
                     android:layout_marginLeft="12dp"
