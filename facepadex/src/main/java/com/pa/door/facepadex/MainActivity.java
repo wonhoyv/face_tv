@@ -2,12 +2,17 @@ package com.pa.door.facepadex;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pa.door.facepadex.fs.WebSocketHelper;
 import com.pa.door.facepadex.util.ActivityCollector;
@@ -18,7 +23,7 @@ import com.pa.door.facepadex.util.SharedPreferencesHelper;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     Intent intentMyService;
     Timer timer;
@@ -26,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     TextView tv_week;
     WebSocketHelper ws;
     SharedPreferencesHelper sp;
+    RelativeLayout rl_root;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +48,12 @@ public class MainActivity extends AppCompatActivity {
         sp = SharedPreferencesHelper.getInstance(this);
         tv_time = (TextView) findViewById(R.id.tv_time);
 //        tv_week = (TextView) findViewById(R.id.tv_week);
+
+        rl_root = (RelativeLayout) findViewById(R.id.rl_root);
+        imageView = (ImageView) findViewById(R.id.iv_password);
+        rl_root.setOnClickListener(this);
+        imageView.setOnClickListener(this);
+
         timer = new Timer();
         timer.schedule(timerTask, 0, 30 * 1000);
         String koala = sp.getStringValue(SharedPreferencesHelper.KOALA_IP, Core.cameraip);
@@ -49,15 +62,13 @@ public class MainActivity extends AppCompatActivity {
         ws.open();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.d("ysj", "resume");
-    }
-
     private android.os.Handler handler = new android.os.Handler(new android.os.Handler.Callback() {
         @Override
         public boolean handleMessage(Message message) {
+
+            if (mPause) {
+                return true;
+            }
 
             if (message.what == 100) {
 
@@ -76,6 +87,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_enter, R.anim.anim_exit);
             }
+            if (message.what == 101) {
+                Toast.makeText(MainActivity.this, "连接成功", Toast.LENGTH_SHORT).show();
+            }
+            if (message.what == 102) {
+                Toast.makeText(MainActivity.this, "连接关闭", Toast.LENGTH_SHORT).show();
+            }
             return false;
         }
     });
@@ -83,30 +100,34 @@ public class MainActivity extends AppCompatActivity {
     private TimerTask timerTask = new TimerTask() {
         @Override
         public void run() {
-            timeHandler.sendEmptyMessage(0);
-            Log.d("ysj", "refresh time");
+            MainActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    tv_time.setText(DateUtil.getWeek() + " " + DateUtil.getTime());
+                }
+            });
         }
     };
 
-    private android.os.Handler timeHandler = new android.os.Handler(new android.os.Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message message) {
-
-            tv_time.setText(DateUtil.getWeek() + " " + DateUtil.getTime());
-//            tv_week.setText(DateUtil.getWeek());
-            return false;
-        }
-    });
-
     @Override
     protected void onStart() {
-        Log.d("ysj", "main onstart");
         super.onStart();
+        Log.d("ysj", "main onstart");
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPause = false;
+        Log.d("ysj", "resume");
+    }
+
+    boolean mPause = false;
 
     @Override
     protected void onPause() {
         Log.d("ysj", "main pause");
+        mPause = true;
         super.onPause();
     }
 
@@ -115,4 +136,30 @@ public class MainActivity extends AppCompatActivity {
         stopService(intentMyService);
         super.onDestroy();
     }
+
+    @Override
+    public void onClick(View view) {
+
+        if (view.getId() == R.id.rl_root) {
+            imageView.setVisibility(View.VISIBLE);
+            hideHandler.removeMessages(0);
+            hideHandler.sendEmptyMessageDelayed(0, 5000);
+        }
+
+        if (view.getId() == R.id.iv_password) {
+            hideHandler.removeMessages(0);
+            imageView.setVisibility(View.GONE);
+
+            Intent intent = new Intent(this, SettingActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.anim_enter, R.anim.anim_exit);
+        }
+    }
+
+    private Handler hideHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            imageView.setVisibility(View.GONE);
+        }
+    };
 }

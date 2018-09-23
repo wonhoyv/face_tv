@@ -6,12 +6,20 @@
     tools:context=".InitActivity"
     android:layout_height="match_parent">
 
-    <!--<ProgressBar-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:id="@+id/pb"-->
-        <!--android:indeterminateDrawable="@drawable/progresbar"-->
-        <!--style="@android:style/Widget.ProgressBar.Large"-->
-        <!--android:layout_centerInParent="true"-->
-        <!--android:layout_height="wrap_content" />-->
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:id="@+id/pb"
+        android:indeterminateDrawable="@drawable/progresbar"
+        style="@android:style/Widget.ProgressBar.Large"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_below="@id/pb"
+        android:layout_width="match_parent"
+        android:text="连接中..."
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>
