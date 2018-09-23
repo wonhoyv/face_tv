@@ -1,17 +1,18 @@
-package com.visitor.obria.facepad;
+package com.pa.door.facepadex;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.visitor.obria.facepad.fs.WSHelper;
-import com.visitor.obria.facepad.util.SharedPreferencesHelper;
-import com.visitor.obria.facepad.util.ToastUtil;
+import com.pa.door.facepadex.fs.WSHelper;
+import com.pa.door.facepadex.util.IPHelper;
+import com.pa.door.facepadex.util.SharedPreferencesHelper;
+import com.pa.door.facepadex.util.ToastUtil;
 
 public class SettingActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -29,7 +30,6 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-
         initView();
     }
 
@@ -44,16 +44,11 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         et_camera = (EditText) findViewById(R.id.et_camera);
 
         sp = SharedPreferencesHelper.getInstance(this);
-        String koala = sp.getStringValue(SharedPreferencesHelper.KOALA_IP, "");
-        String camera = sp.getStringValue(SharedPreferencesHelper.CAMERA_IP, "");
+        String koala = sp.getStringValue(SharedPreferencesHelper.KOALA_IP, Core.cameraip);
+        String camera = sp.getStringValue(SharedPreferencesHelper.CAMERA_IP, Core.camera_rtsp);
 
-        if (TextUtils.isEmpty(koala) && TextUtils.isEmpty(camera)) {
-            koala = "192.168.0.50";
-            camera = "192.168.0.10";
-        }
         et_koala.setText(koala);
         et_camera.setText(camera);
-
 
         btnSave.setOnClickListener(this);
         btnExit.setOnClickListener(this);
@@ -70,9 +65,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             String camera = et_camera.getText().toString();
             sp.setStringValue(SharedPreferencesHelper.KOALA_IP, koala);
             sp.setStringValue(SharedPreferencesHelper.CAMERA_IP, camera);
-            WSHelper ws = new WSHelper(koala, camera);
-            boolean open = ws.Open();
-            ws.Close();
+            boolean open = IPHelper.startPing(koala);
             if (open) {
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);

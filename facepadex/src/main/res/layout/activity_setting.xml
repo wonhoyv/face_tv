@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/root"
-    tools:context="com.visitor.obria.facepad.SettingActivity">
+    tools:context=".SettingActivity"
+    android:id="@+id/root">
 
     <View
         android:layout_weight="1"
@@ -24,7 +24,7 @@
             android:layout_height="match_parent"></View>
 
         <LinearLayout
-            android:layout_width="360dp"
+            android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="wrap_content">
 
@@ -43,11 +43,12 @@
                 android:layout_height="80dp">
                 <TextView
                     style="@style/tvLogin"
-                    android:text="服务:" />
+                    android:text="人脸:" />
 
                 <EditText
                     android:id="@+id/et_koala"
-                    android:layout_width="200dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:textSize="@dimen/settingtextsize"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -55,14 +56,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
-                android:layout_height="80dp">
+                android:layout_height="100dp">
                 <TextView
                     android:text="摄像机:"
                     style="@style/tvLogin" />
 
                 <EditText
                     android:id="@+id/et_camera"
-                    android:layout_width="200dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:textSize="@dimen/settingtextsize"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -76,15 +78,20 @@
                 <Button
                     android:id="@+id/btnExit"
                     android:layout_marginLeft="6dp"
-                    style="@style/btnExit"
+                    android:layout_height="wrap_content"
+                    android:layout_width="120dp"
                     android:text="退出" />
 
                 <Button
                     android:layout_marginLeft="12dp"
                     android:id="@+id/btnSave"
-                    android:text="保存"
-                    style="@style/btnSave"/>
+                    android:layout_height="wrap_content"
+                    android:layout_width="120dp"
+                    android:text="保存"/>
+
             </LinearLayout>
+
+
         </LinearLayout>
 
 

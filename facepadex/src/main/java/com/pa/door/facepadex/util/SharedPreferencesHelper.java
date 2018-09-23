@@ -1,8 +1,7 @@
-package com.visitor.obria.facepad.util;
+package com.pa.door.facepadex.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.ParcelUuid;
 
 /**
  * Created by ysj on 2018/2/27.
