@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -60,6 +61,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String camera = sp.getStringValue(SharedPreferencesHelper.CAMERA_IP, Core.camera_rtsp);
         ws = new WebSocketHelper(this, koala, camera, handler);
         ws.open();
+
+        dpi();
+    }
+
+    private void dpi() {
+
+        DisplayMetrics dm = this.getResources().getDisplayMetrics();
+        String test = "";
     }
 
     private android.os.Handler handler = new android.os.Handler(new android.os.Handler.Callback() {

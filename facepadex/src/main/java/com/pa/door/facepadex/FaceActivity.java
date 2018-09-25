@@ -22,6 +22,7 @@ public class FaceActivity extends BaseActivity {
 
     CircleImageView iv_face;
     TextView tv_name;
+    TextView tv_welcome;
 
     @Override
     protected void onStart() {
@@ -65,12 +66,16 @@ public class FaceActivity extends BaseActivity {
                 tv_name.setText(name);
                 //Picasso.with(this).load(avatar).into(iv_face);
                 ImageLoaderManager.loadSimplay(avatar, iv_face);
+                tv_welcome.setText("欢迎光临");
+                tv_welcome.setBackgroundColor(this.getResources().getColor(R.color.color_green));
             } else {
                 String name = "陌生人";
                 tv_name.setText(name);
                 String avatar = bundle.getString("avatar");
                 Bitmap bitmap = stringToBitmap(avatar);
                 iv_face.setImageBitmap(bitmap);
+                tv_welcome.setText("未注册");
+                tv_welcome.setBackgroundColor(this.getResources().getColor(R.color.color_red));
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -80,6 +85,7 @@ public class FaceActivity extends BaseActivity {
     private void init() {
         iv_face = (CircleImageView) findViewById(R.id.iv_face);
         tv_name = (TextView) findViewById(R.id.tv_name);
+        tv_welcome = (TextView) findViewById(R.id.tv_welcome);
     }
 
     public Bitmap stringToBitmap(String string) {
