@@ -66,7 +66,7 @@ public class FaceActivity extends BaseActivity {
                 tv_name.setText(name);
                 //Picasso.with(this).load(avatar).into(iv_face);
                 ImageLoaderManager.loadSimplay(avatar, iv_face);
-                tv_welcome.setText("欢迎光临");
+                tv_welcome.setText("请通行");
                 tv_welcome.setBackgroundColor(this.getResources().getColor(R.color.color_green));
             } else {
                 String name = "陌生人";
@@ -74,7 +74,7 @@ public class FaceActivity extends BaseActivity {
                 String avatar = bundle.getString("avatar");
                 Bitmap bitmap = stringToBitmap(avatar);
                 iv_face.setImageBitmap(bitmap);
-                tv_welcome.setText("未注册");
+                tv_welcome.setText("禁止进入");
                 tv_welcome.setBackgroundColor(this.getResources().getColor(R.color.color_red));
             }
         } catch (Exception ex) {

@@ -28,7 +28,7 @@
             android:layout_marginTop="32dp"
             android:gravity="center"
             android:textSize="@dimen/recognize_size"
-            android:textStyle="bold" />
+            android:textStyle="normal" />
 
         <View
             android:layout_width="match_parent"
@@ -47,9 +47,9 @@
             android:layout_below="@+id/tv_name"
             android:layout_marginTop="0dp"
             android:gravity="center"
-            android:text="欢迎光临"
-            android:textSize="@dimen/recognize_size"
-            android:textStyle="bold" />
+            android:text="请通行"
+            android:textSize="54sp"
+            android:textStyle="normal" />
     </LinearLayout>
 
 
