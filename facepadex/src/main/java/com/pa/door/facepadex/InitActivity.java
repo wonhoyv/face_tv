@@ -65,7 +65,8 @@ public class InitActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
-                    mHandler.sendEmptyMessage(open ? 1 : 0);
+//                    mHandler.sendEmptyMessage(open ? 1 : 0);
+                    mHandler.sendEmptyMessage(1);
                 }
             }).start();
         }
