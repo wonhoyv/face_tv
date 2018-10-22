@@ -44,7 +44,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         et_camera = (EditText) findViewById(R.id.et_camera);
 
         sp = SharedPreferencesHelper.getInstance(this);
-        String welcome = sp.getStringValue(SharedPreferencesHelper.KOALA_IP, Core.welcome);
+        String welcome = sp.getStringValue(SharedPreferencesHelper.WELCOME, Core.welcome);
         String koala = sp.getStringValue(SharedPreferencesHelper.KOALA_IP, Core.cameraip);
         String camera = sp.getStringValue(SharedPreferencesHelper.CAMERA_IP, Core.camera_rtsp);
 
@@ -70,15 +70,15 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             sp.setStringValue(SharedPreferencesHelper.WELCOME, welcome);
             sp.setStringValue(SharedPreferencesHelper.KOALA_IP, koala);
             sp.setStringValue(SharedPreferencesHelper.CAMERA_IP, camera);
-            boolean open = IPHelper.startPing(koala);
-            if (open) {
+//            boolean open = IPHelper.startPing(koala);
+//            if (open) {
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.anim_enter, R.anim.anim_exit);
                 this.finish();
-            } else {
-                ToastUtil.Show(this, "连接失败，请检查网络！");
-            }
+//            } else {
+//                ToastUtil.Show(this, "连接失败，请检查网络！");
+//            }
         }
 
         if (view.getId() == R.id.btnExit) {
