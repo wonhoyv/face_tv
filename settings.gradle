@@ -1,1 +1,1 @@
-include ':app', ':vlc', ':facepad', ':facepadex'
+include ':app', ':vlc', ':facepad', ':facepadex', ':facepadmegvii'
