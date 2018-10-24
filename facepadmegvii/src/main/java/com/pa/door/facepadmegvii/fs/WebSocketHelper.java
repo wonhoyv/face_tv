@@ -23,6 +23,7 @@ import org.java_websocket.handshake.ServerHandshake;
 public class WebSocketHelper {
 
     private Activity activity;
+    private String mainkoala;
     private String koala;
     private String camera;
     private WebSocketClient client;
@@ -30,8 +31,9 @@ public class WebSocketHelper {
     private boolean mIsWork = false;
     private Handler handler;
 
-    public WebSocketHelper(Context context, String koala, String camera, Handler handler) {
+    public WebSocketHelper(Context context, String mainkoala, String koala, String camera, Handler handler) {
         this.activity = (Activity) context;
+        this.mainkoala = mainkoala;
         this.koala = koala;
         this.camera = camera;
         this.handler = handler;
@@ -72,7 +74,7 @@ public class WebSocketHelper {
                             if (temp.startsWith("http"))
                                 avatar = temp;
                             else
-                                avatar = "http://" + koala + temp;
+                                avatar = "http://" + mainkoala + temp;
                             Log.d("ysj", "message is coming");
                             Bundle bundle = new Bundle();
                             bundle.putString("avatar", avatar);

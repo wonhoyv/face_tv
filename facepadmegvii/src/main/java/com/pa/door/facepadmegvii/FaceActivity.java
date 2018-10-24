@@ -26,6 +26,7 @@ public class FaceActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        ImageLoaderManager.initImageLoader(this);
         init();
         show();
         delayHandler.removeMessages(0);

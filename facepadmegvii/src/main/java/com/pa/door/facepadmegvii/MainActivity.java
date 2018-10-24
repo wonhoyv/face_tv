@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.pa.door.facepadmegvii.fs.WebSocketHelper;
 import com.pa.door.facepadmegvii.util.ActivityCollector;
 import com.pa.door.facepadmegvii.util.DateUtil;
+import com.pa.door.facepadmegvii.util.DeviceUtil;
 import com.pa.door.facepadmegvii.util.ImageLoaderManager;
 import com.pa.door.facepadmegvii.util.SharedPreferencesHelper;
 
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         startMyService();
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        ImageLoaderManager.initImageLoader(this);
+        DeviceUtil.hideBottomUIMenu(this);
     }
 
     private void startMyService() {
@@ -61,11 +62,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         timer = new Timer();
         timer.schedule(timerTask, 0, 30 * 1000);
         String welcome = sp.getStringValue(SharedPreferencesHelper.WELCOME, Core.welcome);
+        String mainkoala = sp.getStringValue(SharedPreferencesHelper.MAIN_KOALA_IP, Core.cameraip);
         String koala = sp.getStringValue(SharedPreferencesHelper.KOALA_IP, Core.cameraip);
         String camera = sp.getStringValue(SharedPreferencesHelper.CAMERA_IP, Core.camera_rtsp);
 
         tv_factory.setText(welcome);
-        ws = new WebSocketHelper(this, koala, camera, handler);
+        ws = new WebSocketHelper(this, mainkoala, koala, camera, handler);
         ws.open();
 
         dpi();

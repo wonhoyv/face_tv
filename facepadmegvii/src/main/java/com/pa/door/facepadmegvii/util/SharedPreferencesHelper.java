@@ -12,6 +12,7 @@ public class SharedPreferencesHelper {
     private SharedPreferences mPref;
     private Context context;
 
+    public static final String MAIN_KOALA_IP = "mainkoala";
     public static final String KOALA_IP = "koala";
     public static final String  CAMERA_IP = "camera";
     public static final String WELCOME = "welcome";

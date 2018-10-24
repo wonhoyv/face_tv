@@ -53,6 +53,21 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="80dp">
+                <TextView
+                    style="@style/tvLogin"
+                    android:text="主服务:" />
+
+                <EditText
+                    android:id="@+id/et_mainkoala"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/settingtextsize"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -60,7 +75,7 @@
                 android:layout_height="80dp">
                 <TextView
                     style="@style/tvLogin"
-                    android:text="人脸:" />
+                    android:text="从服务:" />
 
                 <EditText
                     android:id="@+id/et_koala"
