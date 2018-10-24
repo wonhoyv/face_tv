@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Timer timer;
     TextView tv_time;
     TextView tv_week;
+    TextView tv_factory;
     TextView tv_welcome;
     WebSocketHelper ws;
     SharedPreferencesHelper sp;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tv_time = (TextView) findViewById(R.id.tv_time);
 //        tv_week = (TextView) findViewById(R.id.tv_week);
 
+        tv_factory = (TextView) findViewById(R.id.tv_factory);
         tv_welcome = (TextView) findViewById(R.id.tv_welcome);
         rl_root = (RelativeLayout) findViewById(R.id.rl_root);
         imageView = (ImageView) findViewById(R.id.iv_password);
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String koala = sp.getStringValue(SharedPreferencesHelper.KOALA_IP, Core.cameraip);
         String camera = sp.getStringValue(SharedPreferencesHelper.CAMERA_IP, Core.camera_rtsp);
 
-        tv_welcome.setText(welcome);
+        tv_factory.setText(welcome);
         ws = new WebSocketHelper(this, koala, camera, handler);
         ws.open();
 
@@ -146,7 +148,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onDestroy() {
-        stopService(intentMyService);
+        if (ws != null) {
+            ws.HandClose();
+            ws = null;
+        }
+        if (timer != null) {
+            timer.cancel();
+        }
         super.onDestroy();
     }
 
