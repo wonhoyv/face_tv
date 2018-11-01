@@ -6,6 +6,8 @@
       <module fileurl="file://$PROJECT_DIR$/face_tv.iml" filepath="$PROJECT_DIR$/face_tv.iml" />
       <module fileurl="file://$PROJECT_DIR$/facepad/facepad.iml" filepath="$PROJECT_DIR$/facepad/facepad.iml" />
       <module fileurl="file://$PROJECT_DIR$/facepadex/facepadex.iml" filepath="$PROJECT_DIR$/facepadex/facepadex.iml" />
+      <module fileurl="file://$PROJECT_DIR$/facepadlygc/facepadlygc.iml" filepath="$PROJECT_DIR$/facepadlygc/facepadlygc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/facepadmegvii/facepadmegvii.iml" filepath="$PROJECT_DIR$/facepadmegvii/facepadmegvii.iml" />
       <module fileurl="file://$PROJECT_DIR$/facepadmegvii/facepadmegvii.iml" filepath="$PROJECT_DIR$/facepadmegvii/facepadmegvii.iml" />
       <module fileurl="file://$PROJECT_DIR$/vlc/vlc.iml" filepath="$PROJECT_DIR$/vlc/vlc.iml" />
     </modules>

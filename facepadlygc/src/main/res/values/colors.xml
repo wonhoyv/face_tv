@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--标题-->
+    <color name="colorPrimary">#3F51B5</color>
+    <!--最顶部-->
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="color_red">#FF0101</color>
+    <color name="color_blue">#0195FF</color>
+    <color name="color_main_background">#ffffff</color>
+    <color name="defaultcolor">#00A6E4</color>
+    <color name="color_green">#00ff00</color>
+</resources>
