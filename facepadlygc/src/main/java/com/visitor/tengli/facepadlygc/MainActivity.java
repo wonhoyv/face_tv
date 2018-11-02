@@ -47,14 +47,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         startMyService();
-//        DeviceUtil.hideBottomUIMenu(this);
         EventBus.getDefault().register(this);
-        getWindow().setStatusBarColor(Color.RED);
+
+        View view = getWindow().getDecorView();
+        view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void receive(SocketMessageBean bean) {
-
         String data = "";
     }
 

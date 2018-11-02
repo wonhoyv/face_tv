@@ -65,8 +65,6 @@ public class UdpService extends Service {
 
                     message = message.replace('\0', ' ');
                     message = message.trim();
-                    String debug = "";
-
                     Gson gson = new Gson();
                     SocketMessageBean bean = gson.fromJson(message, SocketMessageBean.class);
                     EventBus.getDefault().post(bean);

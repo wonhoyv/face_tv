@@ -44,7 +44,6 @@ public class InitActivity extends AppCompatActivity {
         View view = getWindow().getDecorView();
         view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
-        //getWindow().setStatusBarColor(Color.BLUE);
     }
 
     private void initView() {
