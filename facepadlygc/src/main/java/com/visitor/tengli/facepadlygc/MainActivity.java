@@ -1,6 +1,7 @@
 package com.visitor.tengli.facepadlygc;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -46,10 +47,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         startMyService();
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        DeviceUtil.hideBottomUIMenu(this);
-
+//        DeviceUtil.hideBottomUIMenu(this);
         EventBus.getDefault().register(this);
+        getWindow().setStatusBarColor(Color.RED);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
