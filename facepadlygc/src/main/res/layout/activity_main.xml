@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/rl_root"
+    android:background="@mipmap/bb"
     android:fitsSystemWindows="true">
     <!--android:background="@color/color_main_background"-->
     <FrameLayout
@@ -36,7 +37,6 @@
         android:layout_gravity="left"
         android:layout_marginTop="250dp"
         android:scaleType="fitCenter"
-        android:src="@mipmap/th"
         android:visibility="visible" />
 
     <TextView
