@@ -1,6 +1,7 @@
 package com.visitor.tengli.facepadlygc;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -47,49 +48,63 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         startMyService();
-//        DeviceUtil.hideBottomUIMenu(this);
         EventBus.getDefault().register(this);
-        getWindow().setStatusBarColor(Color.RED);
+
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // land do nothing is ok
+            String a ="";
+        } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+           String b = "";
+        }
+
+        View view = getWindow().getDecorView();
+        view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void receive(SocketMessageBean bean) {
-
         String data = "";
     }
 
     private void startMyService() {
 
-        sp = SharedPreferencesHelper.getInstance(this);
-        tv_time = (TextView) findViewById(R.id.tv_time);
-
-        tv_factory = (TextView) findViewById(R.id.tv_factory);
-        tv_welcome = (TextView) findViewById(R.id.tv_welcome);
-        rl_root = (RelativeLayout) findViewById(R.id.rl_root);
-        imageView = (ImageView) findViewById(R.id.iv_password);
-        rl_root.setOnClickListener(this);
-        imageView.setOnClickListener(this);
-
-        timer = new Timer();
-        timer.schedule(timerTask, 0, 30 * 1000);
-        String welcome = sp.getStringValue(SharedPreferencesHelper.WELCOME, Core.welcome);
-
-        tv_factory.setText(welcome);
-
-        intentMyService = new Intent(this, UdpService.class);
-        startService(intentMyService);
+//        sp = SharedPreferencesHelper.getInstance(this);
+//        tv_time = (TextView) findViewById(R.id.tv_time);
+//
+//        tv_factory = (TextView) findViewById(R.id.tv_factory);
+//        tv_welcome = (TextView) findViewById(R.id.tv_welcome);
+//        rl_root = (RelativeLayout) findViewById(R.id.rl_root);
+//        imageView = (ImageView) findViewById(R.id.iv_password);
+//        rl_root.setOnClickListener(this);
+//        imageView.setOnClickListener(this);
+//
+//        timer = new Timer();
+//        timer.schedule(timerTask, 0, 30 * 1000);
+//        String welcome = sp.getStringValue(SharedPreferencesHelper.WELCOME, Core.welcome);
+//
+//        tv_factory.setText(welcome);
+//
+//        intentMyService = new Intent(this, UdpService.class);
+//        startService(intentMyService);
 
         dpi();
 
-        String ip1 = IPHelper.getIP(this.getApplicationContext());
-        String ip2 = IPHelper.getIP(this.getApplication().getApplicationContext());
-        String ip3 = IPHelper.getIP(this);
-        String ip4 = IPHelper.getIP(this.getApplicationContext());
+//        String ip1 = IPHelper.getIP(this.getApplicationContext());
+//        String ip2 = IPHelper.getIP(this.getApplication().getApplicationContext());
+//        String ip3 = IPHelper.getIP(this);
+//        String ip4 = IPHelper.getIP(this.getApplicationContext());
     }
 
+    //1024 552
+    //600 976
     private void dpi() {
 
         DisplayMetrics dm = this.getResources().getDisplayMetrics();
+
+        int w= dm.widthPixels;
+        int h = dm.heightPixels;
+        float s = dm.scaledDensity;
         String test = "";
     }
 

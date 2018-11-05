@@ -3,24 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    tools:context=".InitActivity"
+    android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:layout_height="match_parent">
+    android:background="@mipmap/aa"
+    tools:context=".InitActivity">
 
     <ProgressBar
-        android:layout_width="wrap_content"
         android:id="@+id/pb"
-        android:indeterminateDrawable="@drawable/progresbar"
         style="@android:style/Widget.ProgressBar.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_height="wrap_content" />
+        android:indeterminateDrawable="@drawable/progresbar" />
 
     <TextView
-        android:layout_below="@id/pb"
         android:layout_width="match_parent"
-        android:text="连接中..."
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pb"
+        android:layout_marginTop="50dp"
         android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_height="wrap_content" />
+        android:text="连接中..." />
 
 </RelativeLayout>
