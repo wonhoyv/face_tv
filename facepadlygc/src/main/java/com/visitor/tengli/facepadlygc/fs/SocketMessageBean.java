@@ -21,6 +21,8 @@ public class SocketMessageBean {
 
     private String Message;
 
+    private int Delay;
+
     public void setIDType(int IDType) {
         this.IDType = IDType;
     }
@@ -59,5 +61,13 @@ public class SocketMessageBean {
 
     public String getMessage() {
         return Message;
+    }
+
+    public void setDelay(int delay) {
+        Delay = delay;
+    }
+
+    public int getDelay() {
+        return Delay;
     }
 }

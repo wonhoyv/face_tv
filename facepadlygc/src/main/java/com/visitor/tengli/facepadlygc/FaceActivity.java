@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.visitor.tengli.facepadlygc.fs.IDTypeEnum;
 import com.visitor.tengli.facepadlygc.util.ImageLoaderManager;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -29,8 +30,6 @@ public class FaceActivity extends BaseActivity {
         ImageLoaderManager.initImageLoader(this);
         init();
         show();
-        delayHandler.removeMessages(0);
-        delayHandler.sendEmptyMessageDelayed(0, 3 * 1000);
     }
 
     private Handler delayHandler = new Handler(new Handler.Callback() {
@@ -40,15 +39,14 @@ public class FaceActivity extends BaseActivity {
             Intent intent = new Intent(FaceActivity.this, MainActivity.class);
             startActivity(intent);
             FaceActivity.this.finish();
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             overridePendingTransition(R.anim.anim_enter, R.anim.anim_exit);
             return false;
         }
     });
 
-    public void Update() {
+    public void Update(int delay) {
         delayHandler.removeMessages(0);
-        delayHandler.sendEmptyMessageDelayed(0, 3 * 1000);
+        delayHandler.sendEmptyMessageDelayed(0, delay);
     }
 
     protected int getlayout() {
@@ -58,14 +56,21 @@ public class FaceActivity extends BaseActivity {
     private void show() {
         try {
             Bundle bundle = this.getIntent().getBundleExtra("face");
-            String type = bundle.getString("type");
-            String avatar = bundle.getString("avatar");
             String name = bundle.getString("name");
+            String message = bundle.getString("message");
+            String avatar = bundle.getString("avatar");
+            int idtype = bundle.getInt("idtype");
+            int status = bundle.getInt("status");
+            int delay = bundle.getInt("delay");
             tv_name.setText(name);
-            //Picasso.with(this).load(avatar).into(iv_face);
-            ImageLoaderManager.loadSimplay(avatar, iv_face);
-            tv_welcome.setText("请通行");
+            tv_welcome.setText(message);
             tv_welcome.setBackgroundColor(this.getResources().getColor(R.color.color_green));
+
+            if (idtype == IDTypeEnum.Face.ordinal()) {
+                ImageLoaderManager.loadSimplay(avatar, iv_face);
+            }
+
+            Update(delay);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -76,17 +81,6 @@ public class FaceActivity extends BaseActivity {
         iv_face = (CircleImageView) findViewById(R.id.iv_face);
         tv_name = (TextView) findViewById(R.id.tv_name);
         tv_welcome = (TextView) findViewById(R.id.tv_welcome);
-    }
-
-    public Bitmap stringToBitmap(String string) {
-        Bitmap bitmap = null;
-        try {
-            byte[] bitmapArray = Base64.decode(string, Base64.DEFAULT);
-            bitmap = BitmapFactory.decodeByteArray(bitmapArray, 0, bitmapArray.length);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return bitmap;
     }
 
     @Override

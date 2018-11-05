@@ -9,6 +9,7 @@
 
     <application
         android:allowBackup="true"
+        android:name=".LYGCApp"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -38,7 +39,7 @@
             android:name=".FaceActivity"
             android:theme="@style/FaceActivityTheme" />
         <activity android:name=".SettingActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity" android:launchMode="singleInstance" />
     </application>
 
 </manifest>

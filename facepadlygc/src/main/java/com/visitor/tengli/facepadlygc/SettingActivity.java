@@ -39,9 +39,6 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         btnExit = (Button) findViewById(R.id.btnExit);
 
         et_welcome = (EditText) findViewById(R.id.et_welcome);
-        et_mainkoala = (EditText) findViewById(R.id.et_mainkoala);
-        et_koala = (EditText) findViewById(R.id.et_koala);
-        et_camera = (EditText) findViewById(R.id.et_camera);
 
         sp = SharedPreferencesHelper.getInstance(this);
         String welcome = sp.getStringValue(SharedPreferencesHelper.WELCOME, Core.welcome);
@@ -50,9 +47,6 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         String camera = sp.getStringValue(SharedPreferencesHelper.CAMERA_IP, Core.camera_rtsp);
 
         et_welcome.setText(welcome);
-        et_mainkoala.setText(mainkoala);
-        et_koala.setText(koala);
-        et_camera.setText(camera);
 
         btnSave.setOnClickListener(this);
         btnExit.setOnClickListener(this);
@@ -66,28 +60,15 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
         if (view.getId() == R.id.btnSave) {
             String welcome = et_welcome.getText().toString().trim();
-            String mainkoala = et_mainkoala.getText().toString().trim();
-            String koala = et_koala.getText().toString().trim();
-            String camera = et_camera.getText().toString().trim();
-
             sp.setStringValue(SharedPreferencesHelper.WELCOME, welcome);
-            sp.setStringValue(SharedPreferencesHelper.MAIN_KOALA_IP, mainkoala);
-            sp.setStringValue(SharedPreferencesHelper.KOALA_IP, koala);
-            sp.setStringValue(SharedPreferencesHelper.CAMERA_IP, camera);
-//            boolean open = IPHelper.startPing(koala);
-//            if (open) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.anim_enter, R.anim.anim_exit);
             this.finish();
-//            } else {
-//                ToastUtil.Show(this, "连接失败，请检查网络！");
-//            }
         }
 
         if (view.getId() == R.id.btnExit) {
-//            android.os.Process.killProcess(android.os.Process.myPid());
-//            System.exit(0);
+
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.anim_enter, R.anim.anim_exit);

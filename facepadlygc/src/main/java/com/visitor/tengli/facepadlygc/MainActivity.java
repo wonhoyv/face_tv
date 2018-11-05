@@ -50,13 +50,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startMyService();
         EventBus.getDefault().register(this);
 
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            // land do nothing is ok
-            String a ="";
-        } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-           String b = "";
-        }
-
         View view = getWindow().getDecorView();
         view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
@@ -64,7 +57,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void receive(SocketMessageBean bean) {
-        String data = "";
+
+        Bundle bundle = new Bundle( );
+        bundle.putString("name", bean.getName());
+        bundle.putString("message", bean.getMessage());
+        bundle.putInt("idtype", bean.getIDType());
+        bundle.putInt("status", bean.getStatus());
+        bundle.putString("avatar", bean.getAvatar());
+        bundle.putInt("delay", bean.getDelay());
+        Intent intent = new Intent(this, FaceActivity.class);
+        intent.putExtra("face", bundle);
+        startActivity(intent);
+        this.overridePendingTransition(R.anim.anim_enter, R.anim.anim_exit);
     }
 
     private void startMyService() {
@@ -74,10 +78,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //
 //        tv_factory = (TextView) findViewById(R.id.tv_factory);
 //        tv_welcome = (TextView) findViewById(R.id.tv_welcome);
-//        rl_root = (RelativeLayout) findViewById(R.id.rl_root);
-//        imageView = (ImageView) findViewById(R.id.iv_password);
-//        rl_root.setOnClickListener(this);
-//        imageView.setOnClickListener(this);
+        rl_root = (RelativeLayout) findViewById(R.id.rl_root);
+        imageView = (ImageView) findViewById(R.id.iv_password);
+        rl_root.setOnClickListener(this);
+        imageView.setOnClickListener(this);
 //
 //        timer = new Timer();
 //        timer.schedule(timerTask, 0, 30 * 1000);
@@ -85,8 +89,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //
 //        tv_factory.setText(welcome);
 //
-//        intentMyService = new Intent(this, UdpService.class);
-//        startService(intentMyService);
+        intentMyService = new Intent(this, UdpService.class);
+        startService(intentMyService);
 
         dpi();
 

@@ -5,9 +5,7 @@ package com.visitor.tengli.facepadlygc.fs;
  * email: ysjr-2002@163.com
  */
 public enum IDTypeEnum {
-    IC,
     ID,
     Face,
     BarCode,
-    Upload,
 }
