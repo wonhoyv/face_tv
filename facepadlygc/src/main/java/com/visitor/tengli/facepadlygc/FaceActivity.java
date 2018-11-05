@@ -54,26 +54,27 @@ public class FaceActivity extends BaseActivity {
     }
 
     private void show() {
-        try {
-            Bundle bundle = this.getIntent().getBundleExtra("face");
-            String name = bundle.getString("name");
-            String message = bundle.getString("message");
-            String avatar = bundle.getString("avatar");
-            int idtype = bundle.getInt("idtype");
-            int status = bundle.getInt("status");
-            int delay = bundle.getInt("delay");
-            tv_name.setText(name);
-            tv_welcome.setText(message);
-            tv_welcome.setBackgroundColor(this.getResources().getColor(R.color.color_green));
 
-            if (idtype == IDTypeEnum.Face.ordinal()) {
-                ImageLoaderManager.loadSimplay(avatar, iv_face);
-            }
+        Bundle bundle = this.getIntent().getBundleExtra("face");
+        String name = bundle.getString("name");
+        String message = bundle.getString("message");
+        String avatar = bundle.getString("avatar");
+        int idtype = bundle.getInt("idtype");
+        int status = bundle.getInt("status");
+        int delay = bundle.getInt("delay");
+        tv_name.setText(name);
+        tv_welcome.setText(message);
+        tv_welcome.setBackgroundColor(this.getResources().getColor(R.color.color_green));
 
-            Update(delay);
+        if (idtype == IDTypeEnum.Face.ordinal()) {
+            ImageLoaderManager.loadSimplay(avatar, iv_face);
+        }
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        Update(delay);
+
+        if (status == 0) {
+            String test = bundle.getString("abc");
+            int len = test.length();
         }
     }
 
