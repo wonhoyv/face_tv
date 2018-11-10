@@ -42,10 +42,6 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
         sp = SharedPreferencesHelper.getInstance(this);
         String welcome = sp.getStringValue(SharedPreferencesHelper.WELCOME, Core.welcome);
-        String mainkoala = sp.getStringValue(SharedPreferencesHelper.MAIN_KOALA_IP, Core.cameraip);
-        String koala = sp.getStringValue(SharedPreferencesHelper.KOALA_IP, Core.cameraip);
-        String camera = sp.getStringValue(SharedPreferencesHelper.CAMERA_IP, Core.camera_rtsp);
-
         et_welcome.setText(welcome);
 
         btnSave.setOnClickListener(this);

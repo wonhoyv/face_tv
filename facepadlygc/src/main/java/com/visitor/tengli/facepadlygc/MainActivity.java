@@ -31,6 +31,11 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/*
+m 1.0
+h 1.5
+x 2.0
+*/
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     Intent intentMyService;
@@ -73,9 +78,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void startMyService() {
 
-//        sp = SharedPreferencesHelper.getInstance(this);
+        sp = SharedPreferencesHelper.getInstance(this);
 //        tv_time = (TextView) findViewById(R.id.tv_time);
-//
 //        tv_factory = (TextView) findViewById(R.id.tv_factory);
 //        tv_welcome = (TextView) findViewById(R.id.tv_welcome);
         rl_root = (RelativeLayout) findViewById(R.id.rl_root);
@@ -94,10 +98,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         dpi();
 
-//        String ip1 = IPHelper.getIP(this.getApplicationContext());
-//        String ip2 = IPHelper.getIP(this.getApplication().getApplicationContext());
-//        String ip3 = IPHelper.getIP(this);
-//        String ip4 = IPHelper.getIP(this.getApplicationContext());
+        String ip1 = IPHelper.getIP(this.getApplicationContext());
+
     }
 
     //1024 552
@@ -105,11 +107,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void dpi() {
 
         DisplayMetrics dm = this.getResources().getDisplayMetrics();
-
         int w= dm.widthPixels;
         int h = dm.heightPixels;
         float s = dm.scaledDensity;
-        String test = "";
     }
 
     private TimerTask timerTask = new TimerTask() {

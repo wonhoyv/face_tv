@@ -18,7 +18,7 @@
             android:layout_gravity="left"
             android:layout_marginStart="20dp"
             android:src="@mipmap/setting"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_time"
@@ -50,7 +50,7 @@
         android:layout_below="@id/tv_factory"
         android:layout_marginTop="46dp"
         android:gravity="center"
-        android:text="欢迎您"
+        android:text="欢迎光临洛邑古城"
         android:textColor="@color/defaultcolor"
         android:textSize="46sp"
         android:textStyle="bold" />

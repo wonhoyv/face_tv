@@ -20,7 +20,6 @@ import com.visitor.tengli.facepadlygc.util.SharedPreferencesHelper;
 public class InitActivity extends AppCompatActivity {
 
     SharedPreferencesHelper sp;
-    Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

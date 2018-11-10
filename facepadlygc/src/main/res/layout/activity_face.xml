@@ -5,17 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!--pad 500 800-->
     <LinearLayout
-        android:layout_width="500dp"
-        android:layout_height="800dp"
+        android:layout_width="300dp"
+        android:layout_height="500dp"
         android:layout_centerInParent="true"
         android:background="@drawable/yzbg"
         android:orientation="vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_face"
-            android:layout_width="400dp"
-            android:layout_height="400dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="46dp" />
 
@@ -47,7 +48,7 @@
             android:layout_below="@+id/tv_name"
             android:layout_marginTop="0dp"
             android:gravity="center"
-            android:text="请通行"
+            android:text=""
             android:textSize="54sp"
             android:textStyle="normal" />
     </LinearLayout>

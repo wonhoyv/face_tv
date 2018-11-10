@@ -62,12 +62,17 @@ public class FaceActivity extends BaseActivity {
             int idtype = bundle.getInt("idtype");
             int status = bundle.getInt("status");
             int delay = bundle.getInt("delay");
+
             tv_name.setText(name);
             tv_welcome.setText(message);
             tv_welcome.setBackgroundColor(this.getResources().getColor(R.color.color_green));
 
             if (idtype == IDTypeEnum.Face.ordinal()) {
                 ImageLoaderManager.loadSimplay(avatar, iv_face);
+            }
+            if (idtype == IDTypeEnum.ID.ordinal()) {
+
+                iv_face.setImageResource(R.mipmap.card);
             }
 
             Update(delay);
