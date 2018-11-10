@@ -70,10 +70,6 @@ public class FaceActivity extends BaseActivity {
             if (idtype == IDTypeEnum.Face.ordinal()) {
                 ImageLoaderManager.loadSimplay(avatar, iv_face);
             }
-            if (idtype == IDTypeEnum.ID.ordinal()) {
-
-                iv_face.setImageResource(R.mipmap.card);
-            }
 
             Update(delay);
 

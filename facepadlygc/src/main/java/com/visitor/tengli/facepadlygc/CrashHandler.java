@@ -34,6 +34,5 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, pendingIntent);
 
         System.exit(2);
-
     }
 }
