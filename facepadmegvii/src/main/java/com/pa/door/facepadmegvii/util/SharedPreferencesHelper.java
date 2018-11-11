@@ -14,7 +14,8 @@ public class SharedPreferencesHelper {
 
     public static final String MAIN_KOALA_IP = "mainkoala";
     public static final String KOALA_IP = "koala";
-    public static final String  CAMERA_IP = "camera";
+    public static final String CAMERA_IP = "camera";
+    public static final String BUILDING = "building";
     public static final String WELCOME = "welcome";
 
     private SharedPreferencesHelper(Context context) {
@@ -22,13 +23,14 @@ public class SharedPreferencesHelper {
         mPref = context.getSharedPreferences("dalu", Context.MODE_PRIVATE);
     }
 
-    private  static  SharedPreferencesHelper helper;
+    private static SharedPreferencesHelper helper;
+
     public static SharedPreferencesHelper getInstance(Context context) {
 
         if (helper == null) {
             helper = new SharedPreferencesHelper(context);
         }
-        return  helper;
+        return helper;
     }
 
     public void setStringValue(String tag, String value) {

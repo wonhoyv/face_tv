@@ -1,11 +1,13 @@
 package com.pa.door.facepadmegvii;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 
 import com.pa.door.facepadmegvii.util.IPHelper;
 import com.pa.door.facepadmegvii.util.SharedPreferencesHelper;
@@ -21,7 +23,7 @@ public class InitActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_init);
         sp = SharedPreferencesHelper.getInstance(this);
-
+        this.getWindow().setStatusBarColor(Color.TRANSPARENT);
         mHandler = new Handler() {
 
             @Override
@@ -36,6 +38,18 @@ public class InitActivity extends AppCompatActivity {
             }
         };
         initView();
+        dpi();
+    }
+
+    //S30 720*1280 2.0
+    //5寸 480*800  1.0
+    //7寸 600*976  1.0
+    private void dpi() {
+
+        DisplayMetrics dm = this.getResources().getDisplayMetrics();
+        int w= dm.widthPixels;
+        int h = dm.heightPixels;
+        float s = dm.scaledDensity;
     }
 
     private void initView() {

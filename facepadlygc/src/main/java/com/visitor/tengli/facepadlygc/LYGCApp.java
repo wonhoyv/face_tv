@@ -11,7 +11,6 @@ public class LYGCApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        Thread.setDefaultUncaughtExceptionHandler(new CrashHandler(this));
+//        Thread.setDefaultUncaughtExceptionHandler(new CrashHandler(this));
     }
 }

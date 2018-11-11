@@ -43,7 +43,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
         et_welcome = (EditText) findViewById(R.id.et_welcome);
 
         sp = SharedPreferencesHelper.getInstance(this);
-        String welcome = sp.getStringValue(SharedPreferencesHelper.WELCOME, Core.welcome);
+        String welcome = sp.getStringValue(SharedPreferencesHelper.WELCOME, Core.building);
         et_welcome.setText(welcome);
 
         btnSave.setOnClickListener(this);

@@ -5,52 +5,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="480dp"
-        android:layout_height="700dp"
+    <RelativeLayout
+        android:layout_width="@dimen/face_width"
+        android:layout_height="@dimen/face_height"
         android:layout_centerInParent="true"
         android:background="@drawable/yzbg"
         android:orientation="vertical">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_face"
-            android:layout_width="400dp"
-            android:layout_height="400dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="46dp" />
+            android:layout_width="@dimen/face_image_width"
+            android:layout_height="@dimen/face_image_height"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/face"
+            android:layout_marginTop="40dp" />
 
-        <TextView
-            android:id="@+id/tv_name"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/iv_face"
-            android:layout_marginBottom="32dp"
-            android:layout_marginTop="32dp"
-            android:gravity="center"
-            android:textSize="@dimen/recognize_size"
-            android:textStyle="normal" />
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="0dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
-            android:layout_marginTop="4dp"
-            android:background="@android:color/holo_red_dark"></View>
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/iv_face"
+                android:layout_marginBottom="6dp"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:text="杨绍杰"
+                android:textSize="@dimen/recognize_size"
+                android:textStyle="normal" />
 
-        <TextView
-            android:id="@+id/tv_welcome"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/tv_name"
-            android:layout_marginTop="0dp"
-            android:gravity="center"
-            android:text="请通行"
-            android:textSize="54sp"
-            android:textStyle="normal" />
-    </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:background="@android:color/holo_red_dark"></View>
+
+            <TextView
+                android:id="@+id/tv_welcome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_name"
+                android:layout_marginBottom="6dp"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:text="请通行"
+                android:textSize="@dimen/face_pass_size"
+                android:textStyle="normal" />
+        </LinearLayout>
+    </RelativeLayout>
 
 
 </RelativeLayout>

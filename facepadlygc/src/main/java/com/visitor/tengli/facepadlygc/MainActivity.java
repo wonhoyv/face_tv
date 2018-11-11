@@ -1,7 +1,6 @@
 package com.visitor.tengli.facepadlygc;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,15 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.visitor.tengli.facepadlygc.fs.SocketMessageBean;
 import com.visitor.tengli.facepadlygc.service.UdpService;
-import com.visitor.tengli.facepadlygc.util.ActivityCollector;
 import com.visitor.tengli.facepadlygc.util.DateUtil;
 import com.visitor.tengli.facepadlygc.util.DeviceUtil;
 import com.visitor.tengli.facepadlygc.util.IPHelper;
@@ -41,8 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Intent intentMyService;
     Timer timer;
     TextView tv_time;
-    TextView tv_week;
-    TextView tv_factory;
+    TextView tv_building;
     TextView tv_welcome;
     SharedPreferencesHelper sp;
     RelativeLayout rl_root;
@@ -57,13 +52,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         View view = getWindow().getDecorView();
         view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+        DeviceUtil.hideBottomUIMenu(this);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void receive(SocketMessageBean bean) {
 
-        Bundle bundle = new Bundle( );
+        Bundle bundle = new Bundle();
         bundle.putString("name", bean.getName());
         bundle.putString("message", bean.getMessage());
         bundle.putInt("idtype", bean.getIDType());
@@ -79,35 +75,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void startMyService() {
 
         sp = SharedPreferencesHelper.getInstance(this);
-//        tv_time = (TextView) findViewById(R.id.tv_time);
-//        tv_factory = (TextView) findViewById(R.id.tv_factory);
-//        tv_welcome = (TextView) findViewById(R.id.tv_welcome);
-        rl_root = (RelativeLayout) findViewById(R.id.rl_root);
-        imageView = (ImageView) findViewById(R.id.iv_password);
+        tv_time = findViewById(R.id.tv_time);
+        tv_building = findViewById(R.id.tv_building);
+        tv_welcome = findViewById(R.id.tv_welcome);
+        rl_root = findViewById(R.id.rl_root);
+        imageView = findViewById(R.id.iv_password);
         rl_root.setOnClickListener(this);
         imageView.setOnClickListener(this);
-//
-//        timer = new Timer();
-//        timer.schedule(timerTask, 0, 30 * 1000);
-//        String welcome = sp.getStringValue(SharedPreferencesHelper.WELCOME, Core.welcome);
-//
-//        tv_factory.setText(welcome);
-//
+        timer = new Timer();
+        timer.schedule(timerTask, 0, 30 * 1000);
+
         intentMyService = new Intent(this, UdpService.class);
         startService(intentMyService);
 
         dpi();
 
         String ip1 = IPHelper.getIP(this.getApplicationContext());
-
     }
 
     //1024 552
-    //600 976
+    //洛邑古城 600 976
     private void dpi() {
 
         DisplayMetrics dm = this.getResources().getDisplayMetrics();
-        int w= dm.widthPixels;
+        int w = dm.widthPixels;
         int h = dm.heightPixels;
         float s = dm.scaledDensity;
     }
@@ -134,6 +125,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onResume() {
         super.onResume();
         mPause = false;
+        String building = sp.getStringValue(SharedPreferencesHelper.BUILDING, Core.building);
+        String welcome = sp.getStringValue(SharedPreferencesHelper.WELCOME, Core.welcome);
+        tv_building.setText(building);
+        tv_welcome.setText(welcome);
         Log.d("ysj", "resume");
     }
 
@@ -152,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             timer.cancel();
         }
         stopService(intentMyService);
-        if(EventBus.getDefault().isRegistered(this)) {
+        if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
         super.onDestroy();

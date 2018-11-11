@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -18,7 +17,6 @@ import com.pa.door.facepadmegvii.fs.WebSocketHelper;
 import com.pa.door.facepadmegvii.util.ActivityCollector;
 import com.pa.door.facepadmegvii.util.DateUtil;
 import com.pa.door.facepadmegvii.util.DeviceUtil;
-import com.pa.door.facepadmegvii.util.ImageLoaderManager;
 import com.pa.door.facepadmegvii.util.SharedPreferencesHelper;
 
 import java.util.Timer;
@@ -26,11 +24,9 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Intent intentMyService;
     Timer timer;
     TextView tv_time;
-    TextView tv_week;
-    TextView tv_factory;
+    TextView tv_building;
     TextView tv_welcome;
     WebSocketHelper ws;
     SharedPreferencesHelper sp;
@@ -50,9 +46,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         sp = SharedPreferencesHelper.getInstance(this);
         tv_time = (TextView) findViewById(R.id.tv_time);
-//        tv_week = (TextView) findViewById(R.id.tv_week);
 
-        tv_factory = (TextView) findViewById(R.id.tv_factory);
+        tv_building = (TextView) findViewById(R.id.tv_building);
         tv_welcome = (TextView) findViewById(R.id.tv_welcome);
         rl_root = (RelativeLayout) findViewById(R.id.rl_root);
         imageView = (ImageView) findViewById(R.id.iv_password);
@@ -61,22 +56,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         timer = new Timer();
         timer.schedule(timerTask, 0, 30 * 1000);
-        String welcome = sp.getStringValue(SharedPreferencesHelper.WELCOME, Core.welcome);
+
         String mainkoala = sp.getStringValue(SharedPreferencesHelper.MAIN_KOALA_IP, Core.cameraip);
         String koala = sp.getStringValue(SharedPreferencesHelper.KOALA_IP, Core.cameraip);
         String camera = sp.getStringValue(SharedPreferencesHelper.CAMERA_IP, Core.camera_rtsp);
 
-        tv_factory.setText(welcome);
         ws = new WebSocketHelper(this, mainkoala, koala, camera, handler);
         ws.open();
-
-        dpi();
-    }
-
-    private void dpi() {
-
-        DisplayMetrics dm = this.getResources().getDisplayMetrics();
-        String test = "";
     }
 
     private Handler handler = new Handler(new Handler.Callback() {
@@ -135,6 +121,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
+        String building = sp.getStringValue(SharedPreferencesHelper.BUILDING, Core.building);
+        tv_building.setText(building);
+
+        String welcome = sp.getStringValue(SharedPreferencesHelper.WELCOME, Core.welcome);
+        tv_welcome.setText(welcome);
         mPause = false;
         Log.d("ysj", "resume");
     }

@@ -43,7 +43,23 @@
                 android:layout_height="80dp">
                 <TextView
                     style="@style/tvLogin"
-                    android:text="欢迎语:" />
+                    android:text="欢迎语1:" />
+
+                <EditText
+                    android:id="@+id/et_building"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/settingtextsize"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="80dp">
+                <TextView
+                    style="@style/tvLogin"
+                    android:text="欢迎语2:" />
 
                 <EditText
                     android:id="@+id/et_welcome"

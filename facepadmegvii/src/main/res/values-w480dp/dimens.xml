@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="init">50sp</dimen>
+
+    <dimen name="main_image_margin_top">100dp</dimen>
+
+    <dimen name="face_pass_size">46sp</dimen>
+    <dimen name="face_width">420dp</dimen>
+    <dimen name="face_height">620dp</dimen>
+    <dimen name="face_image_width">380dp</dimen>
+    <dimen name="face_image_height">380dp</dimen>
+</resources>

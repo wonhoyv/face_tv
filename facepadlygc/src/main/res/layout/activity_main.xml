@@ -38,7 +38,7 @@
     </FrameLayout>
 
     <TextView
-        android:id="@+id/tv_factory"
+        android:id="@+id/tv_building"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -51,12 +51,12 @@
         android:id="@+id/tv_welcome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_factory"
+        android:layout_below="@id/tv_building"
         android:layout_marginTop="46dp"
         android:gravity="center"
         android:text="欢迎您"
         android:textColor="@color/defaultcolor"
-        android:textSize="46sp"
+        android:textSize="@dimen/init"
         android:textStyle="bold" />
 
 </RelativeLayout>
