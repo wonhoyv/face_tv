@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.pa.door.facepadmegvii.util.DeviceUtil;
 import com.pa.door.facepadmegvii.util.SharedPreferencesHelper;
 
 public class SettingActivity extends AppCompatActivity implements View.OnClickListener {
@@ -29,6 +30,7 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
+        DeviceUtil.hideBottomUIMenu(this);
         initView();
     }
 

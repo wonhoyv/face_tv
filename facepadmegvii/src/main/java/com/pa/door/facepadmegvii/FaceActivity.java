@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.pa.door.facepadmegvii.util.DeviceUtil;
 import com.pa.door.facepadmegvii.util.ImageLoaderManager;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -25,7 +26,7 @@ public class FaceActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        DeviceUtil.hideBottomUIMenu(this);
         ImageLoaderManager.initImageLoader(this);
         init();
         show();

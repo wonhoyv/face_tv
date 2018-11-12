@@ -8,7 +8,9 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.widget.Toast;
 
+import com.pa.door.facepadmegvii.util.DeviceUtil;
 import com.pa.door.facepadmegvii.util.IPHelper;
 import com.pa.door.facepadmegvii.util.SharedPreferencesHelper;
 
@@ -23,18 +25,12 @@ public class InitActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_init);
         sp = SharedPreferencesHelper.getInstance(this);
-        this.getWindow().setStatusBarColor(Color.TRANSPARENT);
+        DeviceUtil.hideBottomUIMenu(this);
         mHandler = new Handler() {
 
             @Override
             public void handleMessage(Message msg) {
-
-                if (msg.what == 1) {
-                    goToMainActivity();
-                }
-                if (msg.what == 0) {
-                    goToSettingActivity();
-                }
+                goToMainActivity();
             }
         };
         initView();
@@ -44,10 +40,11 @@ public class InitActivity extends AppCompatActivity {
     //S30 720*1280 2.0
     //5寸 480*800  1.0
     //7寸 600*976  1.0
+    //5寸 480*752  1.0
     private void dpi() {
 
         DisplayMetrics dm = this.getResources().getDisplayMetrics();
-        int w= dm.widthPixels;
+        int w = dm.widthPixels;
         int h = dm.heightPixels;
         float s = dm.scaledDensity;
     }
@@ -56,44 +53,32 @@ public class InitActivity extends AppCompatActivity {
 
         final String koala = sp.getStringValue(SharedPreferencesHelper.KOALA_IP, Core.cameraip);
         final String camera = sp.getStringValue(SharedPreferencesHelper.CAMERA_IP, Core.camera_rtsp);
-        if (TextUtils.isEmpty(koala) || TextUtils.isEmpty(camera)) {
-            goToSettingActivity();
-        } else {
-            new Thread(new Runnable() {
-                boolean brun = true;
-                boolean open = false;
-                int trycount = 1;
+        new Thread(new Runnable() {
+            boolean brun = true;
+            boolean open = false;
+            int trycount = 1;
 
-                @Override
-                public void run() {
-                    while (brun && trycount <= 10) {
-                        open = IPHelper.startPing(koala);
-                        if (open) {
-                            break;
-                        }
-                        try {
-                            trycount++;
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+            @Override
+            public void run() {
+                while (brun && trycount <= 10) {
+                    open = IPHelper.startPing(koala);
+                    if (open) {
+                        break;
                     }
-//                    mHandler.sendEmptyMessage(open ? 1 : 0);
-                    mHandler.sendEmptyMessage(1);
+                    try {
+                        trycount++;
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }).start();
-        }
+                mHandler.sendEmptyMessage(1);
+            }
+        }).start();
     }
 
     private void goToMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        overridePendingTransition(R.anim.anim_enter, R.anim.anim_exit);
-        this.finish();
-    }
-
-    private void goToSettingActivity() {
-        Intent intent = new Intent(this, SettingActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.anim_enter, R.anim.anim_exit);
         this.finish();
