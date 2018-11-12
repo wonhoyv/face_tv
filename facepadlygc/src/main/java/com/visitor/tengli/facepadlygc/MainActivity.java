@@ -34,7 +34,6 @@ x 2.0
 */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Intent intentMyService;
     Timer timer;
     TextView tv_time;
     TextView tv_building;
@@ -52,8 +51,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         View view = getWindow().getDecorView();
         view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-        DeviceUtil.hideBottomUIMenu(this);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
+        DeviceUtil.hideBottomUIMenu(this);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -84,9 +83,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imageView.setOnClickListener(this);
         timer = new Timer();
         timer.schedule(timerTask, 0, 30 * 1000);
-
-        intentMyService = new Intent(this, UdpService.class);
-        startService(intentMyService);
 
         dpi();
 
@@ -146,7 +142,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (timer != null) {
             timer.cancel();
         }
-        stopService(intentMyService);
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }

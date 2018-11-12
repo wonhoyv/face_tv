@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 
+import com.visitor.tengli.facepadlygc.service.UdpService;
 import com.visitor.tengli.facepadlygc.util.DeviceUtil;
 import com.visitor.tengli.facepadlygc.util.IPHelper;
 import com.visitor.tengli.facepadlygc.util.SharedPreferencesHelper;
@@ -19,19 +20,28 @@ import com.visitor.tengli.facepadlygc.util.SharedPreferencesHelper;
 
 public class InitActivity extends AppCompatActivity {
 
-    SharedPreferencesHelper sp;
+    Intent intentMyService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_init);
-        sp = SharedPreferencesHelper.getInstance(this);
-
         View view = getWindow().getDecorView();
         view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
+        DeviceUtil.hideBottomUIMenu(this);
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        startService();
         initView();
+    }
+
+    private void startService() {
+        intentMyService = new Intent(this, UdpService.class);
+        startService(intentMyService);
     }
 
     private void initView() {
@@ -46,19 +56,5 @@ public class InitActivity extends AppCompatActivity {
             }
         }, 1000);
 
-    }
-
-    private void goToMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        overridePendingTransition(R.anim.anim_enter, R.anim.anim_exit);
-        this.finish();
-    }
-
-    private void goToSettingActivity() {
-        Intent intent = new Intent(this, SettingActivity.class);
-        startActivity(intent);
-        overridePendingTransition(R.anim.anim_enter, R.anim.anim_exit);
-        this.finish();
     }
 }
