@@ -16,9 +16,9 @@
             android:id="@+id/iv_password"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginStart="10dp"
             android:src="@mipmap/setting"
+            android:layout_gravity="center_vertical"
             android:visibility="gone" />
 
         <TextView
@@ -28,7 +28,7 @@
             android:layout_gravity="right"
             android:gravity="center"
             android:text="12:00"
-            android:paddingRight="5dp"
+            android:paddingRight="10dp"
             android:textColor="@color/defaultcolor"
             android:textSize="24sp"
             android:textStyle="bold" />

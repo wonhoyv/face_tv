@@ -17,6 +17,7 @@ public class MyApp extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        mHelper = SharedPreferencesHelper.getInstance(this.getApplicationContext());
 //        Thread.setDefaultUncaughtExceptionHandler(new CrashHandler(this));
     }
 
