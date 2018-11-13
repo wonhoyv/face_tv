@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         intent.putExtra("face", bundle);
         startActivity(intent);
         this.overridePendingTransition(R.anim.anim_enter, R.anim.anim_exit);
+        Log.d("cao", "are you ok");
     }
 
     private void startMyService() {

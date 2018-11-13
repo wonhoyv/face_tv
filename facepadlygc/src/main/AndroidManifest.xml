@@ -39,7 +39,7 @@
             android:name=".FaceActivity"
             android:theme="@style/FaceActivityTheme" />
         <activity android:name=".SettingActivity" android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".MainActivity" android:launchMode="singleInstance" />
+        <activity android:name=".MainActivity"  />
     </application>
 
 </manifest>

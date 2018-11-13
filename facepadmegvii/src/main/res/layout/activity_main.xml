@@ -38,7 +38,7 @@
         android:layout_marginTop="@dimen/main_image_margin_top"
         android:scaleType="fitCenter"
         android:src="@mipmap/th"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <TextView
         android:id="@+id/tv_building"

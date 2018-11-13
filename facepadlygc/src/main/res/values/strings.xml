@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">人脸识别</string>
-
+    <string name="app_name">旅客可视化</string>
     <string name="init">初始化中...</string>
 </resources>

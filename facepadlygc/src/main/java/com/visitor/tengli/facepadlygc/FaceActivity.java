@@ -26,6 +26,15 @@ public class FaceActivity extends BaseActivity {
     TextView tv_name;
     TextView tv_welcome;
 
+    protected int getlayout() {
+        return R.layout.activity_face;
+    }
+
+    @Override
+    protected void myCreate() {
+
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -55,10 +64,6 @@ public class FaceActivity extends BaseActivity {
         delayHandler.sendEmptyMessageDelayed(0, delay);
     }
 
-    protected int getlayout() {
-        return R.layout.activity_face;
-    }
-
     private void show() {
         try {
             Bundle bundle = this.getIntent().getBundleExtra("face");
@@ -69,12 +74,28 @@ public class FaceActivity extends BaseActivity {
             int status = bundle.getInt("status");
             int delay = bundle.getInt("delay");
 
-            tv_name.setText(name);
-            tv_welcome.setText(message);
-            tv_welcome.setBackgroundColor(this.getResources().getColor(R.color.color_green));
-
-            if (idtype == IDTypeEnum.Face.ordinal()) {
-                ImageLoaderManager.loadSimplay(avatar, iv_face);
+            if (status == 0) {
+                tv_name.setText(name);
+                tv_welcome.setText(message);
+                tv_welcome.setBackgroundColor(this.getResources().getColor(R.color.color_green));
+                if (idtype == IDTypeEnum.Face.ordinal()) {
+                    //人脸
+                    ImageLoaderManager.loadSimplay(avatar, iv_face);
+                }
+                if (idtype == IDTypeEnum.BarCode.ordinal()) {
+                    //二维码
+                    iv_face.setImageResource(R.mipmap.yes);
+                }
+                if (idtype == IDTypeEnum.ID.ordinal()) {
+                    //身份证
+                    iv_face.setImageResource(R.mipmap.yes);
+                }
+            }
+            else
+            {
+                //1 验证失败
+                iv_face.setImageResource(R.mipmap.no);
+                tv_welcome.setText(message);
             }
 
             Update(delay);
