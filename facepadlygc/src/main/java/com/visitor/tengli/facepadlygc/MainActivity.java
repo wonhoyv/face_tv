@@ -14,7 +14,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.visitor.tengli.facepadlygc.fs.SocketMessageBean;
-import com.visitor.tengli.facepadlygc.service.UdpService;
 import com.visitor.tengli.facepadlygc.util.DateUtil;
 import com.visitor.tengli.facepadlygc.util.DeviceUtil;
 import com.visitor.tengli.facepadlygc.util.IPHelper;
@@ -38,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView tv_time;
     TextView tv_building;
     TextView tv_welcome;
-    SharedPreferencesHelper sp;
     RelativeLayout rl_root;
     ImageView imageView;
 
@@ -46,12 +44,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        startMyService();
+        initView();
         EventBus.getDefault().register(this);
+        Log.d("ysj", "mainactivity create");
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void receive(SocketMessageBean bean) {
+    public void onReceiveMessage(SocketMessageBean bean) {
 
         Bundle bundle = new Bundle();
         bundle.putString("name", bean.getName());
@@ -64,12 +63,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         intent.putExtra("face", bundle);
         startActivity(intent);
         this.overridePendingTransition(R.anim.anim_enter, R.anim.anim_exit);
-        Log.d("cao", "are you ok");
+        Log.d("ysj", "main receive message");
     }
 
-    private void startMyService() {
+    private void initView() {
 
-        sp = SharedPreferencesHelper.getInstance(this);
         tv_time = findViewById(R.id.tv_time);
         tv_building = findViewById(R.id.tv_building);
         tv_welcome = findViewById(R.id.tv_welcome);
@@ -114,31 +112,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         DeviceUtil.hideBottomUIMenu(this);
-        Log.d("ysj", "main onstart");
+        Log.d("ysj", "mainactivity onstart");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         mPause = false;
-        String building = sp.getStringValue(SharedPreferencesHelper.BUILDING, Core.building);
-        String welcome = sp.getStringValue(SharedPreferencesHelper.WELCOME, Core.welcome);
+        String building = MyApp.getInstance().getHelper().getStringValue(SharedPreferencesHelper.BUILDING, Core.building);
+        String welcome = MyApp.getInstance().getHelper().getStringValue(SharedPreferencesHelper.WELCOME, Core.welcome);
         tv_building.setText(building);
         tv_welcome.setText(welcome);
-        Log.d("ysj", "resume");
+        Log.d("ysj", "mainactivity resume");
     }
 
     boolean mPause = false;
 
     @Override
     protected void onPause() {
-        Log.d("ysj", "main pause");
+        Log.d("ysj", "mainactivity pause");
         mPause = true;
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
+        Log.d("ysj", "mainactivity destroy");
         if (timer != null) {
             timer.cancel();
         }

@@ -23,7 +23,6 @@ public class InitActivity extends AppCompatActivity {
 
     Intent intentMyService;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

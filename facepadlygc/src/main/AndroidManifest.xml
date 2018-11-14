@@ -18,7 +18,6 @@
         <activity android:name=".InitActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -37,9 +36,10 @@
 
         <activity
             android:name=".FaceActivity"
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/FaceActivityTheme" />
         <activity android:name=".SettingActivity" android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".MainActivity"  />
+        <activity android:name=".MainActivity" android:launchMode="singleInstance"  android:windowSoftInputMode="stateHidden"  />
     </application>
 
 </manifest>

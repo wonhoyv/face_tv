@@ -15,8 +15,13 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.visitor.tengli.facepadlygc.fs.IDTypeEnum;
+import com.visitor.tengli.facepadlygc.fs.SocketMessageBean;
 import com.visitor.tengli.facepadlygc.util.DeviceUtil;
 import com.visitor.tengli.facepadlygc.util.ImageLoaderManager;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -32,7 +37,8 @@ public class FaceActivity extends BaseActivity {
 
     @Override
     protected void myCreate() {
-
+        Log.d("ysj", "faceactivity create");
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -44,7 +50,7 @@ public class FaceActivity extends BaseActivity {
         DeviceUtil.hideBottomUIMenu(this);
         ImageLoaderManager.initImageLoader(this);
         init();
-        show();
+        showMessage(this.getIntent().getBundleExtra("face"));
     }
 
     private Handler delayHandler = new Handler(new Handler.Callback() {
@@ -64,9 +70,8 @@ public class FaceActivity extends BaseActivity {
         delayHandler.sendEmptyMessageDelayed(0, delay);
     }
 
-    private void show() {
+    private void showMessage(Bundle bundle) {
         try {
-            Bundle bundle = this.getIntent().getBundleExtra("face");
             String name = bundle.getString("name");
             String message = bundle.getString("message");
             String avatar = bundle.getString("avatar");
@@ -90,9 +95,7 @@ public class FaceActivity extends BaseActivity {
                     //身份证
                     iv_face.setImageResource(R.mipmap.yes);
                 }
-            }
-            else
-            {
+            } else {
                 //1 验证失败
                 iv_face.setImageResource(R.mipmap.no);
                 tv_welcome.setText(message);
@@ -115,5 +118,23 @@ public class FaceActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.d("ysj", "faceactivity onDestroy");
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onReceiveMessage(SocketMessageBean bean) {
+
+        Bundle bundle = new Bundle();
+        bundle.putString("name", bean.getName());
+        bundle.putString("message", bean.getMessage());
+        bundle.putInt("idtype", bean.getIDType());
+        bundle.putInt("status", bean.getStatus());
+        bundle.putString("avatar", bean.getAvatar());
+        bundle.putInt("delay", bean.getDelay());
+
+        Log.d("ysj", "face receive message");
+        showMessage(bundle);
     }
 }
