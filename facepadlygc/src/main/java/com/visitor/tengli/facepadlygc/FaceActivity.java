@@ -82,10 +82,11 @@ public class FaceActivity extends BaseActivity {
             if (status == 0) {
                 tv_name.setText(name);
                 tv_welcome.setText(message);
-                tv_welcome.setBackgroundColor(this.getResources().getColor(R.color.color_green));
+                //tv_welcome.setBackgroundColor(this.getResources().getColor(R.color.color_green));
                 if (idtype == IDTypeEnum.Face.ordinal()) {
                     //人脸
-                    ImageLoaderManager.loadSimplay(avatar, iv_face);
+                    //ImageLoaderManager.loadSimplay(avatar, iv_face);
+                    iv_face.setImageResource(R.mipmap.yes);
                 }
                 if (idtype == IDTypeEnum.BarCode.ordinal()) {
                     //二维码
@@ -98,9 +99,9 @@ public class FaceActivity extends BaseActivity {
             } else {
                 //1 验证失败
                 iv_face.setImageResource(R.mipmap.no);
-                tv_welcome.setText(message);
-            }
 
+            }
+            tv_welcome.setText(message);
             Update(delay);
 
         } catch (Exception ex) {

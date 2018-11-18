@@ -3,13 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/mainbg"
     android:layout_height="match_parent">
 
     <!--pad 500 800-->
     <LinearLayout
-        android:layout_width="300dp"
-        android:layout_height="500dp"
+        android:layout_width="@dimen/facewidth"
+        android:layout_height="@dimen/faceheight"
         android:layout_centerInParent="true"
         android:orientation="vertical">
 
@@ -48,7 +47,6 @@
             android:layout_below="@+id/tv_name"
             android:layout_marginTop="0dp"
             android:gravity="center"
-            android:text=""
             android:textSize="54sp"
             android:textStyle="normal" />
     </LinearLayout>

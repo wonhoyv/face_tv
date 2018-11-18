@@ -75,8 +75,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imageView = findViewById(R.id.iv_password);
         rl_root.setOnClickListener(this);
         imageView.setOnClickListener(this);
-        timer = new Timer();
-        timer.schedule(timerTask, 0, 30 * 1000);
+//        timer = new Timer();
+//        timer.schedule(timerTask, 0, 30 * 1000);
 
         dpi();
 

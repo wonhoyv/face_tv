@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="init">60sp</dimen>
+    <dimen name="init">80sp</dimen>
     <dimen name="settingtextsize">24sp</dimen>
     <dimen name="recognize_size">32sp</dimen>
 
     <dimen name="facewidth">400dp</dimen>
     <dimen name="faceheight">500dp</dimen>
 
-    <dimen name="welcome_margin_top">220dp</dimen>
+    <dimen name="welcome_margin_top">54dp</dimen>
 </resources>
